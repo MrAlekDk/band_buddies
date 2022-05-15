@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../database/createConnection.js";
 import bcrypt from "bcrypt";
+import mailer from "../mailer/emailer.js"
 import jwt from "jsonwebtoken"
 
 const router = express.Router();
@@ -16,7 +17,7 @@ router.post("/register", async (req,res)=>{
             user.password = hashedPassword;
             db.users.insertOne(user);
 
-            //mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
+            mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
             res.sendStatus(200);
         }
         catch{

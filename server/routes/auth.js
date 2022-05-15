@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../database/createConnection.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.post("/register", async (req,res)=>{
         try{
             const hashedPassword = await bcrypt.hash(user.password, 10);
             user.password = hashedPassword;
-            db.users.insertOne({user: user});
+            db.users.insertOne(user);
 
             //mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
             res.sendStatus(200);
@@ -21,12 +22,13 @@ router.post("/register", async (req,res)=>{
         catch{
             res.sendStatus(400);
         }
+        return;
     }
     res.sendStatus(403);
 });
 
-router.post("/login", (req,res)=>{
-    let user = await db.users.findOne({email: req.body.username});
+router.post("/login", async (req,res)=>{
+    let user = await db.users.findOne({email: req.body.email});
     if(user === null){
         res.status(400).send("User doesn't exist");
     }
@@ -42,7 +44,7 @@ router.post("/login", (req,res)=>{
         }
         catch{
             //this catch will cause problems when you only enter an email and press login
-            //res.sendStatus(500);
+            res.sendStatus(500);
         }
     }
 });

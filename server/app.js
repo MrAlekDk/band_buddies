@@ -7,6 +7,9 @@ import path from "path";
 app.use(express.static(path.resolve("../client/public")));
 
 
+import {authRouter, authToken} from "./routes/auth.js";
+app.use(authRouter);
+
 
 //
 app.get('*', (req, res) => {

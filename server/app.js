@@ -13,9 +13,9 @@ app.use(authRouter);
 
 //
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve("../client/french-boutique/public/index.html"))
+    res.sendFile(path.resolve("../client/public/index.html"));
   });
 
 app.listen(PORT, ()=>{
-    console.log("Now running on port: ", PORT)
+    console.log("Now running on port: ", PORT);
 });

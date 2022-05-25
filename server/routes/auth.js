@@ -12,6 +12,7 @@ router.post("/register", async (req,res)=>{
     const { user } = req.body;
     const login = await db.users.findOne({email: user.email});
     if(login === null){
+        console.log("new")
         try{
             const hashedPassword = await bcrypt.hash(user.password, 10);
             user.password = hashedPassword;
@@ -29,18 +30,19 @@ router.post("/register", async (req,res)=>{
 });
 
 router.post("/login", async (req,res)=>{
-    let user = await db.users.findOne({email: req.body.email});
+    let user = await db.users.findOne({email: req.body.user.email});
+    console.log(user)
     if(user === null){
-        res.status(400).send("User doesn't exist");
+        res.status(404).send("User doesn't exist");
     }
     else{
         try{
-            if(await bcrypt.compare(req.body.password, user.password)){
+            if(await bcrypt.compare(req.body.user.password, user.password)){
                 const accesToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
                 user.token = accesToken;
-                res.json({user, user})
+                res.json({accesToken});
             } else {
-                res.sendStatus(400).send("Wrong password");
+                res.sendStatus(403).send("Wrong password");
             }
         }
         catch{

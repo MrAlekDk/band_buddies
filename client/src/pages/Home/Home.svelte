@@ -1,14 +1,13 @@
 <script>
     import Navbar from "../../components/Navbar/Navbar.svelte"
-
+    import Header from "../../components/Header/Header.svelte"
     let backgroundUrl = "./images/duo_guitar.jpg"
     
 
 </script>
-
     <div class="bg-image"></div>
     <div class="content-container">
-    <Navbar />
+            <Header />
     <h1>Welcome to Band Buddies!</h1>
     </div>
 <style>
@@ -23,12 +22,12 @@
         z-index: 0;
         filter: blur(8px);
         -webkit-filter: blur(8px);
-        height: 100%;
+        min-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;
-         position:absolute;
+        position:absolute;
     }
 
 

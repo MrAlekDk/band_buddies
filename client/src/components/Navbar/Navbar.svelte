@@ -15,6 +15,7 @@
     z-index: 2;
     text-align: center;
     align-self: flex-end;
+    justify-self: flex-end;
     margin-right: 5%;
     margin-top: 1%;
 }

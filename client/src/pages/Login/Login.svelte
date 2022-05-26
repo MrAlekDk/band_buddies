@@ -1,15 +1,20 @@
 <script>
-import Header from "../../components/Header/Header.svelte"
+import Header from "../../components/Header/Header.svelte";
+import { useNavigate, useLocation } from "svelte-navigator";
+import { onMount } from "svelte";
 
 let email = "";
 let password ="";
+
+        
+const navigate = useNavigate();
+const location = useLocation();
 
 async function submitLogin(){
         const user = {
             email: email,
             password: password
         }
-
 
         const response = await fetch("http://localhost:3000/login", {
             method: 'POST', 
@@ -21,12 +26,15 @@ async function submitLogin(){
                 },
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify({user}) 
-         });
-    let data = await response.json()
-    console.log(data)
-    localStorage.setItem("accesToken", data.accesToken);
+            });
+                
+        let data = await response.json();
+        localStorage.setItem("accesToken", data.accesToken);
 
-    }
+        const from = ($location.state && $location.state.from) || "/";
+        navigate("/profile", from, { replace: true });
+
+}
 </script>
 
 <div class="bg-image"></div>

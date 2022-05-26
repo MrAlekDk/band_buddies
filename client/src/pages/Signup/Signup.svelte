@@ -79,7 +79,7 @@ onMount( async ()=>{
         <div class="signup-container">
             <h2>Create new account:</h2>
             <div class="inputs">
-                <div class="row1">
+                <div class="row">
                     <div class="input-box">
                         <label for="first-name">First Name</label>
                         <input id="first-name" bind:value={first} placeholder="Mathias" maxlength=20 minlength=2>
@@ -98,7 +98,7 @@ onMount( async ()=>{
                     </div>
                     <button on:click={submitSignup} class="button" style="vertical-align:middle" disabled="{!first || !last || !email || !birthday}"><span>Create account! </span></button>
                 </div>
-                <div class="row2">
+                <div class="row">
                     <div class="input-box">
                         <label for="password">Password</label>
                         <input id="password" bind:value={password} type="password">
@@ -197,7 +197,7 @@ onMount( async ()=>{
         margin-bottom: 4%;
     }
 
-    .row1, .row2{
+    .row{
         display: flex;
         flex-direction: column;
         min-width: 35%;

@@ -2,10 +2,12 @@
 
 </script>
 
-<div class="navbar-container">
+<nav class="navbar-container">
     <a href="/signup" type="button" class="glow-on-hover">Signup</a>
     <a href="/login" type="button" class="glow-on-hover">Login</a>
-</div>
+    <a href="/profile" type="button" class="glow-on-hover">Profile</a>
+    <a href="/posts" type="button" class="glow-on-hover">Posts</a>
+</nav>
 
 <style>
 
@@ -13,11 +15,7 @@
     display: flex;
     flex-direction: row;
     z-index: 2;
-    text-align: center;
-    align-self: flex-end;
-    justify-self: flex-end;
-    margin-right: 5%;
-    margin-top: 1%;
+    align-self: center;
 }
 
 a{

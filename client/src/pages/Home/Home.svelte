@@ -41,6 +41,7 @@
         padding: 20px;
         text-align: center;
         min-width: 50%;
+        font-size: 50px;
     }
 
     .content-container{

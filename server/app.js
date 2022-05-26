@@ -10,6 +10,8 @@ app.use(express.static(path.resolve("../client/public")));
 import {authRouter, authToken} from "./routes/auth.js";
 app.use(authRouter);
 
+import {profileRouter} from "./routes/user.js";
+app.use(profileRouter);
 
 //
 app.get('*', (req, res) => {

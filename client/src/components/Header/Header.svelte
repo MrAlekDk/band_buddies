@@ -26,6 +26,7 @@
 .header{
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     min-width: 40%;
 }
 
@@ -62,11 +63,10 @@ h1:hover{
   }
 }
 
-    .header-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-    }
+.header-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
 
 </style>

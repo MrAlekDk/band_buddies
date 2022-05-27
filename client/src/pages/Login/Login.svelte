@@ -53,7 +53,7 @@ async function submitLogin(){
                     <label for="password">Password</label>
                     <input id="password" bind:value={password} type="password">
                 </div>
-                <button on:click={submitLogin} class="button" style="vertical-align:middle" disabled="{!email || !password }"><span>Login </span></button>
+                <button on:click={submitLogin} class="button" style="vertical-align:middle" disabled="{!email || !password }"><span>Login</span></button>
             </div>
         </div>
     </div>
@@ -118,6 +118,9 @@ h1{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+input{
+    background-color: rgba(0,0,0, 0.4); 
 }
 
 .input-box, button{

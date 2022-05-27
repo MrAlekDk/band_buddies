@@ -26,8 +26,15 @@
 .header{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    min-width: 40%;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
 h1{
@@ -61,12 +68,6 @@ h1:hover{
   h1 {
     font-size: 25px;
   }
-}
-
-.header-container{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
 }
 
 </style>

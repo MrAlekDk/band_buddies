@@ -1,5 +1,6 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
+import Input from "../../components/Input/Input.svelte"
 
 import { onMount } from "svelte"
 
@@ -42,6 +43,8 @@ onMount( async ()=>{
     let artistType = "";
     let postalcode = 0;
 
+    let testBind ="";
+
     async function submitSignup(){
         const user = {
             name: first,
@@ -54,7 +57,6 @@ onMount( async ()=>{
             matches: []
         }
 
-
         const response = await fetch("http://localhost:3000/register", {
             method: 'POST', 
             mode: 'cors',
@@ -63,11 +65,11 @@ onMount( async ()=>{
             headers: {
                 'Content-Type': 'application/json'
                 },
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify({user: user}) 
-  });
-    date = await response.json()
-    console.log(data)
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify({user: user}) 
+        });
+        date = await response.json()
+        console.log(data)
 
     }
 
@@ -174,6 +176,10 @@ onMount( async ()=>{
         padding: 20px;
         text-align: center;
         min-width: 50%;
+    }
+
+    input, select{
+      background-color: rgb(0,0,0);
     }
 
     .inputs{

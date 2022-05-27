@@ -1,9 +1,9 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
-import Modal from "../../components/Modal/Modal.svelte"
-
+import Modal from "../../components/Modal/PostModal.svelte"
 import { Modals, closeModal } from 'svelte-modals'
 import { openModal } from 'svelte-modals'
+import { onMount } from 'svelte'
 
 let posts = ["hello", "hello2"]
 
@@ -11,22 +11,36 @@ function handleClick() {
         openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal" })
     }
 
+onMount(async ()=>{
+    const res = await fetch("http://localhost:3000/post", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+            },
+        });
+    const data = await res.json();
+    posts = data.data;
+});
 </script>
+
 <div class="bg-image"></div>
     <div class="content-container">
         <Header />
-        <Modal />
+        <Modal/>
         <Modals>
             <div slot="svelte-modal" on:click={closeModal}></div>
         </Modals>
         <div class="post-container">
-            <h1>Welcome to posts</h1>
+            <h1>Posts from our members</h1>
             <button class="button" on:click={handleClick}><span>Create new post</span></button>
             <div class="posts">
 
                 {#each posts as post}
                 <div class="post">
-                    <p>Yo i am {post}</p>
+                    <h2>{post.title}</h2>
+                    <p>{post.content}</p>
+                    <p>{post.auther}</p>
+                    <p>{post.date}</p>
                 </div>
                 {/each}
             </div>
@@ -83,6 +97,7 @@ function handleClick() {
         border: 3px solid #f1f1f1;
         margin-top: 1%;
         width: 80%;
+        box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 
     .posts{
@@ -92,10 +107,14 @@ function handleClick() {
     }
 
     .post{
+        background-color: black;
         border: 3px solid #f1f1f1;
         min-width: 30%;
         min-height: 50px;
         text-align: center;
+        width: 30%;
+        margin: 2%;
+        border-radius: 2%;
     }
 
     .button {

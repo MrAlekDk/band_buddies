@@ -1,10 +1,14 @@
 <script>
 
+const token = localStorage.getItem("accesToken") || false
+
 </script>
 
 <nav class="navbar-container">
+    {#if !token}
     <a href="/signup" type="button" class="glow-on-hover">Signup</a>
     <a href="/login" type="button" class="glow-on-hover">Login</a>
+    {/if}
     <a href="/profile" type="button" class="glow-on-hover">Profile</a>
     <a href="/posts" type="button" class="glow-on-hover">Posts</a>
 </nav>
@@ -16,6 +20,8 @@
     flex-direction: row;
     z-index: 2;
     align-self: center;
+    justify-content: flex-end;
+    min-width: 40%;
 }
 
 a{

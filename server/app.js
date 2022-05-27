@@ -13,6 +13,9 @@ app.use(authRouter);
 import {profileRouter} from "./routes/user.js";
 app.use(profileRouter);
 
+import {postRouter} from "./routes/posts.js";
+app.use(postRouter);
+
 //
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));

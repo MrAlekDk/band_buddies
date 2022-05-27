@@ -113,8 +113,7 @@ function handleClick(){
 
 <style>
 
-.input,
-.textarea {
+.input, .textarea {
   border: 1px solid #ccc;
   font-family: inherit;
   font-size: inherit;
@@ -162,6 +161,7 @@ function handleClick(){
         min-width: 50%;
         width: 60%;
         font-size: 50px;
+        box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 
     .content-container{
@@ -190,6 +190,7 @@ function handleClick(){
         min-width: 50%;
         width: 60%;
         z-index: 5;
+        box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 
     input{
@@ -239,6 +240,12 @@ function handleClick(){
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+img{
+    box-shadow: 10px 10px 5px rgb(7, 7, 7);
+    border-radius: 7%;
+    margin-bottom: 5%;
 }
 
     </style>

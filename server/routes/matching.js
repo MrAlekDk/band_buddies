@@ -7,11 +7,26 @@ import db from "../database/createConnection.js";
 import { authToken } from "./auth.js";
 router.use(express.json());
 
+router.get("/matches", authToken, async (req, res)=>{
+    const user = req.user
+    const obj_ids = user.likedUsers.map(id => ObjectId(id))
+    const matches = await db.users.find({$and:[{_id: {$in: obj_ids}},
+                                               {likedUsers: user._id}]})
+                                                .toArray();
+    res.json({data: matches});
+});
+
 router.get("/usersToMatch", authToken, async (req,res)=>{
     let user = req.user
-    const users = await db.users.find({email: { $ne: user.email}}).toArray();
-    res.json({data: users});
-})
+    const obj_likedIds = user.likedUsers.map(id => ObjectId(id))
+    const obj_dislikedIds = user.dislikedUsers.map(id => ObjectId(id))
+    const users = await db.users.find({ $and: [{_id: {$nin: obj_likedIds}}, 
+                                                {_id:{$nin: obj_dislikedIds}},
+                                                {email: { $ne: user.email}}]})
+                                                .toArray();
+    if(users.length > 0) res.json({data: users});
+    else res.sendStatus(404); 
+});
 
 router.post("/rate", authToken, (req,res)=>{
     const user = req.user;

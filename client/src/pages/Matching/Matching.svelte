@@ -20,22 +20,46 @@
 }
 
 let users =[{id:0, name:""}]
+let matches = [{name: "Placeholder",
+        lastName: "Placeholder",
+        matches: [],
+        birthday: "",
+        postalcode: 0,
+        email: "",
+        artistType: "",
+        bio: "You have not yet made a bio!"}]
 let generator;
-
+let userToSwipe=true;
     onMount(async ()=>{
-        const token = localStorage.getItem("accesToken")
-        const res = await fetch("http://localhost:3000/usersToMatch", {
+    const token = localStorage.getItem("accesToken")
+
+        const res1 = await fetch("http://localhost:3000/usersToMatch", {
             method: "GET",
             headers:{
                 "content-type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
         });
-    const data = await res.json();
-    users = data.data;
+    if(res1.ok){
+    const userData = await res1.json();
+    users = userData.data;
     generator = getUser(1, users); 
-
     user = generator.next().value
+    }
+    else{
+        userToSwipe = false;
+    }
+      
+        const res2 = await fetch("http://localhost:3000/matches", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+        const matchesData = await res2.json();
+        matches = matchesData.data;
+        console.log(matches)
     })
     
 
@@ -65,6 +89,7 @@ let generator;
         body: JSON.stringify({rating: rating, userId: user._id}) 
         });
     }
+
 let user ={};
 </script>
 
@@ -72,15 +97,30 @@ let user ={};
     <div class="content-container">
             <Header />
     <div class="matching-container">
-        <h1>This is the matching page lol</h1>
+        <h1>Find your future band buddies!</h1>
+        {#if userToSwipe}
         <div class="user">
             <h2>{user.name}</h2>
             <p>{user.artistType}</p>
-    </div>
+        </div>
         <div class="buttons-container">
             <button class="button" id="like" on:click={handleClick}><span id="like">Like</span></button>
             <button class="button" id="dislike" on:click={handleClick}><span id="dislike">Dislike</span></button>
         </div>
+        {:else}
+        <div class="user">
+            <h2>Sorry, currently there are no users to rate :/</h2>
+        </div>
+        {/if}
+    </div>
+    <div class="matches">
+        {#each matches as match}
+        <div class="match">
+            <h2>{match.name +" "+ match.lastName}</h2>
+            <p>Artisttype: {match.artistType}</p>
+
+        </div>
+        {/each}
     </div>
     </div>
 
@@ -119,6 +159,11 @@ let user ={};
         font-size: 50px;
     }
 
+    h2{
+        align-self: center;
+        
+    }
+
     .content-container{
         display: flex;
         flex-direction: column;
@@ -142,6 +187,35 @@ let user ={};
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 
+    .matches{
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0, 0.4); 
+        color: white;
+        font-weight: bold;
+        border: 3px solid #f1f1f1;
+        color: white;
+        font-weight: bold;
+        border: 3px solid #f1f1f1;
+        margin-top: 1%;
+        width: 80%;
+        box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        padding: 3%;
+    }
+
+    .match{
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        background-color: #FF3CAC;
+        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+        z-index: 5;
+        border: 3px solid #f1f1f1;
+    }
 
     .user{
         background-color: #FF3CAC;

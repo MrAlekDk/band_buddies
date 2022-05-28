@@ -28,7 +28,6 @@ onMount( async ()=>{
         });
     const data = await res.json();
     user = data.user
-    console.log(user)
 });
     
 async function updateUser(){
@@ -74,7 +73,7 @@ function handleClick(){
             <div class="row">
                 <img src={imageSrc} alt="User image">
                 <div class="information">
-                    <input class="bio" id="bio-input" value="{`Bio: ${(user.bio)}`}" disabled>
+                    <input class="bio" id="bio-input" value={(user.bio)} disabled>
                     <button class="button" on:click={handleClick}><span>{buttonText}</span></button>
                 </div>
             </div>

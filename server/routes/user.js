@@ -8,16 +8,16 @@ import { authToken } from "./auth.js";
 router.use(express.json());
 
 router.get("/user", authToken, (req,res)=>{
-    const user = req.user
+    const user = req.user;
     res.json({user});
-})
+});
 
 router.patch("/user", authToken, (req,res)=>{
-    let data = req.body
-    const id = req.user._id
-    db.users.updateOne({_id : ObjectId(id)}, {$set: data})
+    let data = req.body;
+    const id = req.user._id;
+    db.users.updateOne({_id : ObjectId(id)}, {$set: data});
     res.sendStatus(200);
-})
+});
 
 
 export const profileRouter = router;

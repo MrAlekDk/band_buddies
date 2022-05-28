@@ -11,6 +11,7 @@ const token = localStorage.getItem("accesToken") || false
     {/if}
     <a href="/profile" type="button" class="glow-on-hover">Profile</a>
     <a href="/posts" type="button" class="glow-on-hover">Posts</a>
+    <a href="/matching" type="button" class="glow-on-hover">Matching</a>
 </nav>
 
 <style>

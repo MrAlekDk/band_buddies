@@ -27,7 +27,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: fit-content;
+    width: 40%;
 }
 
 .header-container{

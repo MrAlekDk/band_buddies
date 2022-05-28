@@ -1,62 +1,68 @@
 <script>
-import Header from "../../components/Header/Header.svelte"
-import Modal from "../../components/Modal/PostModal.svelte"
-import { Modals, closeModal } from 'svelte-modals'
-import { openModal } from 'svelte-modals'
-import { onMount } from 'svelte'
+    import Navbar from "../../components/Navbar/Navbar.svelte"
+    import Header from "../../components/Header/Header.svelte"
+    import { onMount } from "svelte"
 
-let posts = ["hello", "hello2"]
+    //generator
+    function* getUser(pageSize = 1, list) {
+    let output = {};
+    let index = 0;
 
-function handleClick() {
-        openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal" })
+    while (index < list.length) {
+        for (let i = index; i < index + pageSize; i++) {
+            if (list[i]) {
+                output = list[i];
+            }
+        }
+        yield output;
+        index += pageSize;
+    }
+}
+
+let users =[{id: 1, name:"Alek"}, {id:2, name:"Jens"}, {id:3, name:"Ida"}];
+let generator= getUser(1, users); 
+
+    onMount(async ()=>{
+
+        user = generator.next().value
+    })
+
+    function handleClick(event){
+        console.log(event.target)
+        user = generator.next().value
+        console.log("click")
     }
 
-onMount(async ()=>{
-    const res = await fetch("http://localhost:3000/post", {
-            method: "GET",
-            headers:{
-                "content-type": "application/json",
-            },
-        });
-    const data = await res.json();
-    posts = data.data;
-});
+let user ={};
 </script>
 
-<div class="bg-image"></div>
+    <div class="bg-image"></div>
     <div class="content-container">
-        <Header />
-        <Modal/>
-        <Modals>
-            <div slot="svelte-modal" on:click={closeModal}></div>
-        </Modals>
-        <div class="post-container">
-            <h1>Posts from our members</h1>
-            <button class="button" on:click={handleClick}><span>Create new post</span></button>
-            <div class="posts">
-
-                {#each posts as post}
-                <div class="post">
-                    <h2>{post.title}</h2>
-                    <p>{post.content}</p>
-                    <p>{post.auther}</p>
-                    <p>{post.date}</p>
-                </div>
-                {/each}
-            </div>
+            <Header />
+    <div class="matching-container">
+        <h1>This is the matching page lol</h1>
+        <div class="user">
+            <h2>{user.name}</h2>
+            <p>{user.id}</p>
+    </div>
+        <div class="buttons-container">
+            <button class="button" id="like" on:click={handleClick}><span>Like</span></button>
+            <button class="button" id="dislike" on:click={handleClick}><span>Dislike</span></button>
         </div>
+    </div>
     </div>
 
 
 <style>
-:global(body){
+
+    :global(body){
         margin:0;
         padding:0;
     }
 
     .bg-image{
-        background-image: url("../images/bass.jpg");
-        z-index: -1;
+        background-image: url("../images/band2.jpg");
+        z-index: 0;
         filter: blur(8px);
         -webkit-filter: blur(8px);
         min-height: 100%;
@@ -69,12 +75,14 @@ onMount(async ()=>{
 
 
     h1{
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0, 0.4); 
         color: white;
         font-weight: bold;
+        border: 3px solid #f1f1f1;
         z-index: 2;
         padding: 20px;
         text-align: center;
-        align-self: center;
         min-width: 50%;
         font-size: 50px;
     }
@@ -87,12 +95,13 @@ onMount(async ()=>{
         align-items: center;
     }
 
-    .post-container{
+    .matching-container{
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         background-color: #ff3caa79;
         background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
         color: white;
         font-weight: bold;
         border: 3px solid #f1f1f1;
@@ -101,17 +110,11 @@ onMount(async ()=>{
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 
-    .posts{
-        display: flex;
-        flex-direction:  row;
-        justify-content: space-around;
-        
-    }
 
-    .post{
+    .user{
         background-color: #FF3CAC;
         background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
+        z-index: 5;
         border: 3px solid #f1f1f1;
         min-width: 30%;
         min-height: 50px;
@@ -119,6 +122,14 @@ onMount(async ()=>{
         width: 30%;
         margin: 2%;
         border-radius: 2%;
+        justify-self: center;
+    }
+
+    .buttons-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
     }
 
     .button {
@@ -135,6 +146,7 @@ cursor: pointer;
 margin: 5px;
 min-width: 25%;
 max-width: 30%;
+z-index: 5;
 }
 
 .button span {
@@ -161,4 +173,5 @@ padding-right: 25px;
 opacity: 1;
 right: 0;
 }
+
 </style>

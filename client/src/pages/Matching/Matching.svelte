@@ -19,20 +19,52 @@
     }
 }
 
-let users =[{id: 1, name:"Alek"}, {id:2, name:"Jens"}, {id:3, name:"Ida"}];
-let generator= getUser(1, users); 
+let users =[{id:0, name:""}]
+let generator;
 
     onMount(async ()=>{
+        const token = localStorage.getItem("accesToken")
+        const res = await fetch("http://localhost:3000/usersToMatch", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+    const data = await res.json();
+    users = data.data;
+    generator = getUser(1, users); 
 
-        user = generator.next().value
+    user = generator.next().value
     })
+    
 
     function handleClick(event){
-        console.log(event.target)
-        user = generator.next().value
-        console.log("click")
+        const target = event.target.id;
+        submitRating(target);
+        try{
+            user = generator.next().value;
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
+    async function submitRating(rating){
+        const token = localStorage.getItem("accesToken")
+        const response = await fetch("http://localhost:3000/rate", {
+            method: 'POST', 
+            mode: 'cors',
+            cache: 'no-cache', 
+            credentials: 'same-origin', 
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+                },
+        referrerPolicy: 'no-referrer', 
+        body: JSON.stringify({rating: rating, userId: user._id}) 
+        });
+    }
 let user ={};
 </script>
 
@@ -43,11 +75,11 @@ let user ={};
         <h1>This is the matching page lol</h1>
         <div class="user">
             <h2>{user.name}</h2>
-            <p>{user.id}</p>
+            <p>{user.artistType}</p>
     </div>
         <div class="buttons-container">
-            <button class="button" id="like" on:click={handleClick}><span>Like</span></button>
-            <button class="button" id="dislike" on:click={handleClick}><span>Dislike</span></button>
+            <button class="button" id="like" on:click={handleClick}><span id="like">Like</span></button>
+            <button class="button" id="dislike" on:click={handleClick}><span id="dislike">Dislike</span></button>
         </div>
     </div>
     </div>

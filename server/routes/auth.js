@@ -15,6 +15,8 @@ router.post("/register", async (req,res)=>{
         try{
             const hashedPassword = await bcrypt.hash(user.password, 10);
             user.password = hashedPassword;
+            user.likedUsers=[]
+            user.dislikedUsers=[]
             db.users.insertOne(user);
             mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
             res.sendStatus(200);

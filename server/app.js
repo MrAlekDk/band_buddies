@@ -16,6 +16,9 @@ app.use(profileRouter);
 import {postRouter} from "./routes/posts.js";
 app.use(postRouter);
 
+import {matchingRouter} from "./routes/matching.js";
+app.use(matchingRouter);
+
 //
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));

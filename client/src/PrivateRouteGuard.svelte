@@ -29,7 +29,6 @@
 </script>
 {#if isAuthorized}
 	<slot/>
-	<!--Weird code behavior I need to research later. Line 34 should have path /profile, but a blank page i presented if I write that-->
 	<Route path={path} component={component}/>
 {:else}
 	<Route path={"/"} component={Home}/>

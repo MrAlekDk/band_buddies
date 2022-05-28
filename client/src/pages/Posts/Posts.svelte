@@ -34,7 +34,6 @@ onMount(async ()=>{
             <h1>Posts from our members</h1>
             <button class="button" on:click={handleClick}><span>Create new post</span></button>
             <div class="posts">
-
                 {#each posts as post}
                 <div class="post">
                     <h2>{post.title}</h2>
@@ -90,9 +89,8 @@ onMount(async ()=>{
     .post-container{
         display: flex;
         flex-direction: column;
-        background-color: #ff3caa79;
-        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0, 0.4); 
         color: white;
         font-weight: bold;
         border: 3px solid #f1f1f1;
@@ -104,8 +102,9 @@ onMount(async ()=>{
     .posts{
         display: flex;
         flex-direction:  row;
+        flex-wrap: wrap;
         justify-content: space-around;
-        
+
     }
 
     .post{

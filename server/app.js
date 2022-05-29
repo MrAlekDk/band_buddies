@@ -19,11 +19,33 @@ app.use(postRouter);
 import {matchingRouter} from "./routes/matching.js";
 app.use(matchingRouter);
 
-//
+import http from "http";
+const server = http.createServer(app);
+import { Server } from "socket.io";
+const io = new Server(server);
+
+io.on("connection", (socket)=>{
+  console.log("connection made", socket.id)
+  const username = socket.handshake.auth.username;
+  console.log(username)
+
+  socket.join("some room");
+
+  socket.on("private message", (data)=>{
+      console.log(data);
+      socket.to("some room").emit("private message", {data: data.msg});
+      socket.emit("private message", {data: data.msg})
+  })
+})
+
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));
   });
 
-app.listen(PORT, ()=>{
+server.listen(PORT, ()=>{
+  console.log("Now running on port: ", PORT);
+})
+
+/*app.listen(PORT, ()=>{
     console.log("Now running on port: ", PORT);
-});
+});*/

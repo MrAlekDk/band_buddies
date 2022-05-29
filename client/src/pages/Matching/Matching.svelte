@@ -1,6 +1,8 @@
 <script>
     import Navbar from "../../components/Navbar/Navbar.svelte"
     import Header from "../../components/Header/Header.svelte"
+
+    import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
 
     //generator
@@ -18,6 +20,7 @@
         index += pageSize;
     }
 }
+let client ={};
 
 let users =[{id:0, name:""}]
 let matches = [{name: "Placeholder",
@@ -59,7 +62,16 @@ let userToSwipe=true;
         });
         const matchesData = await res2.json();
         matches = matchesData.data;
-        console.log(matches)
+
+        const res = await fetch("http://localhost:3000/user", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+    const data = await res.json();
+    client = data.user
     })
     
 
@@ -91,6 +103,19 @@ let userToSwipe=true;
     }
 
 let user ={};
+let chatOpen = false;
+let chatText = "Open chat";
+
+function switchChatState(){
+    if(chatOpen){
+        chatOpen = false;
+        chatText = "Open chat";}
+    else {
+        chatOpen = true;
+        chatText = "Close chat";
+    } 
+}
+
 </script>
 
     <div class="bg-image"></div>
@@ -118,12 +143,14 @@ let user ={};
         <div class="match">
             <h2>{match.name +" "+ match.lastName}</h2>
             <p>Artisttype: {match.artistType}</p>
-
+            <button class="button" id="open-chat" on:click={switchChatState}>Open chat</button>
+            {#if chatOpen}
+            <Chat client={client}/>
+            {/if}
         </div>
         {/each}
     </div>
     </div>
-
 
 <style>
 

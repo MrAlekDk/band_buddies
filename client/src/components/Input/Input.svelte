@@ -1,38 +1,96 @@
 <script>
-    export let id;
-    export let type;
+    import { onMount } from "svelte"
+
+let inputProps = {
+	class:[$$restProps.class]
+	}
+
+    export let inputId;
+    export let inputType;
     export let label;
     export let specStyle;
+    export let placeholder;
 
-    let value ="";
+    export let value ="";
+
+    onMount(async ()=>{
+        let input = document.getElementById(inputId)
+        input.type = inputType || "text";
+    });
 </script>
 
-<div class="input-box">
-    <label for={id}>{label}</label>
-    <input id={id} bind:value={value} style={specStyle}>
+<div class="input-box fade-in-input">
+    <label for={inputId}>{label}</label>
+    <input id={inputId} style={specStyle}
+                bind:value
+            {...inputProps} placeholder={placeholder}>
 </div>
+
+<!--label for="first-name">First Name</label>
+<input id="first-name" bind:value={first} placeholder="Mathias" maxlength=20 minlength=2-->
 
 <style>
 
-.input-box{
+input, select{
+      background-color: rgb(0,0,0);
+      color: white;
+    }
+
+    .inputs{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .input-box{
         display:flex;
         flex-direction: column;
-        justify-self: flex-start;
-        align-self: center;
-        text-align: center;
-        width: 50%;
+        margin-left: 2%;
     }
-input{
-    color: rgb(255, 255, 255);
-    background-color: rgb(0,0,0);
-    word-wrap: break-word;
-    word-break: break-all;
+
+
+    label{
+        text-align: start;
+        margin-bottom: 4%;
+    }
+
+    .row{
+        display: flex;
+        flex-direction: column;
+        min-width: 35%;
+        max-width: 45%;
+    }
+
+    .fade-in-input {
+  animation: fadeIn 0.5s;
+  -webkit-animation: fadeIn 0.5s;
+  -moz-animation: fadeIn 0.5s;
+  -o-animation: fadeIn 0.5s;
+  -ms-animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 
-label{
-    color: white;
-    font-weight: bolder;
-    text-align: start;
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 
 </style>

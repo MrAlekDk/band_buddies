@@ -1,6 +1,7 @@
 <script>
     import { closeModal } from 'svelte-modals';
     import Input from "../../components/Input/Input.svelte"
+    import Button from "../Button/Button.svelte"
 
     async function submit(){
         const title = document.getElementById("post-title").value
@@ -50,7 +51,7 @@
                     <Input id="post-content" type="text" label="Content" specStyle={"height: 100px; padding-bottom: 80px; overflow-x: wrap"}/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="button" on:click={submit} data-bs-dismiss="modal"><span>Create post</span></button>
+                    <Button on:click={submit} data-bs-dismiss="modal" buttonText="Create post"/>
                 </div>
             </div>
         </div>
@@ -154,47 +155,5 @@
 @-ms-keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:1;}
-}
-
-.button {
-border-radius: 4px;
-background-color: rgb(0, 0, 0); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 18px;
-font-weight: bolder;
-align-self: center;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-padding: 1%;
-min-width: 55%;
-max-width: 70%;
-}
-
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
-}
-
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
 }
 </style>

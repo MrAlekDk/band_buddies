@@ -1,9 +1,10 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
 import Input from "../../components/Input/Input.svelte"
+import Select from "../../components/Input/Select.svelte"
+import Button from "../../components/Button/Button.svelte"
 
 import { onMount } from "svelte"
-
 
 onMount( async ()=>{
     setMinAndMaxDates()
@@ -43,8 +44,6 @@ onMount( async ()=>{
     let artistType = "";
     let postalcode = 0;
 
-    let testBind ="";
-
     async function submitSignup(){
         const user = {
             name: first,
@@ -57,6 +56,8 @@ onMount( async ()=>{
             matches: []
         }
 
+        console.log(user)
+        /*
         const response = await fetch("http://localhost:3000/register", {
             method: 'POST', 
             mode: 'cors',
@@ -69,7 +70,7 @@ onMount( async ()=>{
         body: JSON.stringify({user: user}) 
         });
         date = await response.json()
-        console.log(data)
+        console.log(data)*/
 
     }
 
@@ -82,41 +83,26 @@ onMount( async ()=>{
             <h2>Create new account:</h2>
             <div class="inputs">
                 <div class="row">
-                    <div class="input-box">
-                        <label for="first-name">First Name</label>
-                        <input id="first-name" bind:value={first} placeholder="Mathias" maxlength=20 minlength=2>
-                    </div>
-                    <div class="input-box">
-                        <label for="last-name">Last Name</label>
-                        <input id="last-name" bind:value={last} placeholder="Johansen" maxlength=30 minlength=2>
-                    </div>
-                    <div class="input-box">
-                        <label for="artist">You are...</label>
-                        <select name="artist" id="artist" bind:value={artistType}>
-                            <option value="SOLO">Solo artist</option>
-                            <option value="BAND">Existing Band</option>
-                            <option value="VENUE">Contractor/Venue</option>
-                          </select>
-                    </div>
-                    <button on:click={submitSignup} class="button" style="vertical-align:middle" disabled="{!first || !last || !email || !birthday}"><span>Create account! </span></button>
-                </div>
-                <div class="row">
-                    <div class="input-box">
-                        <label for="password">Password</label>
-                        <input id="password" bind:value={password} type="password">
-                    </div>
-                    <div class="input-box">
-                        <label for="email">Email</label>
-                        <input id="email" bind:value={email} placeholder="exampleEmail@gmail.com" type="email">
-                    </div>
-                    <div class="input-box">
-                        <label for="birthday">Birthday</label>
-                        <input id="birthday-field" bind:value={birthday} type="date">
-                    </div>
-                    <div class="input-box">
-                        <label for="city">Postalcode</label>
-                        <input id="city" bind:value={postalcode} type="number">
-                    </div>
+                    <Select inputId="artist" bind:value={artistType} label="You are..." />
+                    {#if artistType}
+                    <Input inputId="first-name" bind:value={first} label="First Name" placeholder="Mathias" />
+                    {/if}
+                    {#if first}
+                    <Input inputId="last-name" bind:value={last} label="Last Name" placeholder="Johanson" />
+                    {/if}
+                    {#if last}
+                    <Input inputId="email" bind:value={email} label="Email" placeholder="exampleEmail@gmail.com" inputType="email"/>
+                    {/if}
+                    {#if email}
+                    <Input inputId="password" bind:value={password} label="Password" inputType="password"/>
+                    {/if}
+                    {#if password}
+                    <Input inputId="birthday" bind:value={birthday} label="Birthday" inputType="date"/>
+                    {/if}
+                    {#if birthday}
+                    <Input inputId="city" bind:value={postalcode} label="Postalcode" inputType="number"/>
+                    <Button on:click={submitSignup} buttonText="Create account!" butDisabled="{!first || !last || !email || !birthday}" />
+                    {/if}
                 </div>
 
             </div>
@@ -178,29 +164,10 @@ onMount( async ()=>{
         min-width: 50%;
     }
 
-    input, select{
-      background-color: rgb(0,0,0);
-    }
-
     .inputs{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-    }
-
-    .input-box, button{
-        display:flex;
-        flex-direction: column;
-        margin-left: 2%;
-    }
-
-    button{
-        text-align: center;
-
-    }
-    label{
-        text-align: start;
-        margin-bottom: 4%;
     }
 
     .row{
@@ -209,45 +176,5 @@ onMount( async ()=>{
         min-width: 35%;
         max-width: 45%;
     }
-
-    .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.4); 
-  color: white;
-  border: 3px solid #f1f1f1;
-  text-align: center;
-  font-size: 20px;
-  max-width: 65%;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
 
 </style>

@@ -1,6 +1,7 @@
 <script>
     import Navbar from "../../components/Navbar/Navbar.svelte"
     import Header from "../../components/Header/Header.svelte"
+    import Button from "../../components/Button/Button.svelte"
 
     import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
@@ -129,8 +130,8 @@ function switchChatState(){
             <p>{user.artistType}</p>
         </div>
         <div class="buttons-container">
-            <button class="button" id="like" on:click={handleClick}><span id="like">Like</span></button>
-            <button class="button" id="dislike" on:click={handleClick}><span id="dislike">Dislike</span></button>
+            <Button buttonId="like" buttonText="Like" on:click={handleClick}/>
+            <Button buttonId="dislike" buttonText="Dislike" on:click={handleClick}/>
         </div>
         {:else}
         <div class="user">
@@ -143,7 +144,7 @@ function switchChatState(){
         <div class="match">
             <h2>{match.name +" "+ match.lastName}</h2>
             <p>Artisttype: {match.artistType}</p>
-            <button class="button" id="open-chat" on:click={switchChatState}>Open chat</button>
+            <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
             {#if chatOpen}
             <Chat client={client}/>
             {/if}
@@ -262,49 +263,8 @@ function switchChatState(){
         display: flex;
         flex-direction: row;
         justify-content: center;
-        width: 100%;
+        width: 20%;
     }
 
-    .button {
-border-radius: 4px;
-background-color: rgb(0,0,0);
-background-color: rgba(0,0,0, 0.4); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 20px;
-align-self: center;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-min-width: 25%;
-max-width: 30%;
-z-index: 5;
-}
-
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
-}
-
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
-}
 
 </style>

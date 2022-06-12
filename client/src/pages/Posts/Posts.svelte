@@ -1,6 +1,7 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
 import Modal from "../../components/Modal/PostModal.svelte"
+import Button from "../../components/Button/Button.svelte"
 import { Modals, closeModal } from 'svelte-modals'
 import { openModal } from 'svelte-modals'
 import { onMount } from 'svelte'
@@ -32,7 +33,9 @@ onMount(async ()=>{
         </Modals>
         <div class="post-container">
             <h1>Posts from our members</h1>
-            <button class="button" on:click={handleClick}><span>Create new post</span></button>
+            <div class="buttons-container">
+                <Button on:click={handleClick} buttonText="Create new post"/>
+            </div>
             <div class="posts">
                 {#each posts as post}
                 <div class="post">
@@ -120,44 +123,11 @@ onMount(async ()=>{
         border-radius: 2%;
     }
 
-    .button {
-border-radius: 4px;
-background-color: rgb(0,0,0);
-background-color: rgba(0,0,0, 0.4); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 20px;
-align-self: center;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-min-width: 25%;
-max-width: 30%;
-}
-
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
-}
-
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
-}
+    .buttons-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: center;
+        width: 25%;
+    }
 </style>

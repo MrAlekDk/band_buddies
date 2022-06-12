@@ -4,22 +4,23 @@
 
     const socket = io("http://localhost:3000");
     let messages = []
+    let input;
 
     export let client;
 
     function sendMessage(){
-        let message = client.name + ": " + document.getElementById("message").value;
-        console.log("Send:", message)
+        let message = client.name + ": " + input.value;
         socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name});
+        input.value = ""
     }
 
     socket.on("private message", ({data})=>{
-        console.log("Recieved", data)
         messages = [...messages, data]
     })
 
 
 onMount(async ()=>{
+    input = document.getElementById("message")
     console.log("open modal")
     socket.auth = {username: "Alek"}
     socket.connect()
@@ -29,11 +30,8 @@ onMount(async ()=>{
 })
 </script>
 
-
-<!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
   <div class="modal-content">
     <span id="close" class="close">&times;</span>
     <div class="chat-box">
@@ -53,32 +51,29 @@ onMount(async ()=>{
 
 <style>
 
-/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 10; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4); 
 }
 
-/* Modal Content/Box */
 .modal-content {
     display: flex;
   background-color: #000000;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%; 
   height: 50%;
 }
 
-/* The Close Button */
 .close {
   color: #aaa;
   float: right;

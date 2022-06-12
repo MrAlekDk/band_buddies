@@ -18,7 +18,7 @@ router.post("/register", async (req,res)=>{
             user.likedUsers=[]
             user.dislikedUsers=[]
             db.users.insertOne(user);
-            mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
+            //mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
             res.sendStatus(200);
         }
         catch{

@@ -1,5 +1,6 @@
 <script>
 import Header from "../../components/Header/Header.svelte";
+import Button from "../../components/Button/Button.svelte"
 import { useNavigate, useLocation } from "svelte-navigator";
 import { onMount } from "svelte";
 
@@ -53,7 +54,7 @@ async function submitLogin(){
                     <label for="password">Password</label>
                     <input id="password" bind:value={password} type="password">
                 </div>
-                <button on:click={submitLogin} class="button" style="vertical-align:middle" disabled="{!email || !password }"><span>Login</span></button>
+                <Button class=".button" on:click={submitLogin} disabled="{!email || !password }" buttonText={"Login"} />
             </div>
         </div>
     </div>
@@ -123,68 +124,10 @@ input{
     background-color: rgba(0,0,0, 0.4); 
 }
 
-.input-box, button{
+.input-box{
     display:flex;
     flex-direction: column;
     margin-left: 2%;
-}
-
-button{
-    text-align: center;
-    align-self: center;
-    min-width: 50%;
-    width: 75%;
-}
-label{
-    text-align: start;
-    margin-bottom: 4%;
-}
-
-.row{
-    display: flex;
-    flex-direction: column;
-    min-width: 35%;
-    max-width: 45%;
-}
-
-.button {
-display: inline-block;
-border-radius: 4px;
-background-color: rgb(0,0,0);
-background-color: rgba(0,0,0, 0.4); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 20px;
-max-width: 65%;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-}
-
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
-}
-
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
 }
 
 </style>

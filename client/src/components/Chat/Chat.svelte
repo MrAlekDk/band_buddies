@@ -2,6 +2,8 @@
     import io from "socket.io-client";
     import { onMount } from "svelte"
 
+    import Button from "../Button/Button.svelte"
+
     const socket = io("http://localhost:3000");
     let messages = []
     let input;
@@ -9,8 +11,9 @@
     export let client;
 
     function sendMessage(){
+      console.log(client)
         let message = client.name + ": " + input.value;
-        socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name});
+        socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink});
         input.value = ""
     }
 
@@ -28,6 +31,11 @@ onMount(async ()=>{
     modal.style.display = "block";
 
 })
+
+function getTime(){
+  const time = new Date;
+  return `${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
+}
 </script>
 
 <div id="myModal" class="modal">
@@ -38,11 +46,17 @@ onMount(async ()=>{
         <h2>Chat with "Band buddy"</h2>
         <div class="message-box">
             {#each messages as message}
-            <p>{message}</p>
+            <div class="message">
+              <img src={message.img || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}>
+              <p>{message}</p>
+              <p>{getTime()}</p>
+            </div>
             {/each}
         </div>
         <input id="message">
-        <button class="button" on:click={sendMessage}><span>Send message</span></button>
+        <div class="button-container">
+          <Button buttonId ="button" on:click={sendMessage} buttonText="Send message"></Button>
+        </div>
     </div>
   </div>
 
@@ -71,7 +85,7 @@ onMount(async ()=>{
   padding: 20px;
   border: 1px solid #888;
   width: 80%; 
-  height: 50%;
+  height: 80%;
 }
 
 .close {
@@ -113,46 +127,20 @@ h2{
     border: 3px solid #f1f1f1;
 }
 
-.button {
-border-radius: 4px;
-background-color: rgb(0,0,0);
-background-color: rgba(0,0,0, 0.4); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 20px;
-align-self: center;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-min-width: 25%;
-max-width: 30%;
-z-index: 10;
+.message{
+  margin: 2%;
+  border: 3px solid #f1f1f1;
 }
 
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
+img{
+  width: 5%;
+  border-radius: 50%;
 }
 
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
+.button-container{
+  max-width: 50%;
+  min-width: 30%;
+  align-self: center;
 }
 
 </style>

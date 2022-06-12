@@ -48,7 +48,7 @@
                 <div class="modal-header">
                     <h1>{title}</h1>
                     <button type="button" class="btn-close box-content w-4 h-4 p-1 opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-white hover:opacity-100 hover:no-underline"
-                             aria-label="Close" on:click={closeModal}>X</button>
+                             aria-label="Close" on:click={closeModal}>&times;</button>
                 </div>
                 <div class="modal-body">
                     <Input inputId="post-title" bind:value={postTitle} label="Post Title" placeholder="A new post" inputType="text" />

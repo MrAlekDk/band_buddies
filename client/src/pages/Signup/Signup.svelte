@@ -43,6 +43,7 @@ onMount( async ()=>{
     let email = "";
     let artistType = "";
     let postalcode = 0;
+    let imgLink = "";
 
     async function submitSignup(){
         const user = {
@@ -53,11 +54,11 @@ onMount( async ()=>{
             email: email,
             artistType: artistType,
             postalcode: postalcode,
-            matches: []
+            imgLink: imgLink,
+            likedUsers: [],
+            dislikedUser: []
         }
-
-        console.log(user)
-        /*
+        
         const response = await fetch("http://localhost:3000/register", {
             method: 'POST', 
             mode: 'cors',
@@ -70,8 +71,7 @@ onMount( async ()=>{
         body: JSON.stringify({user: user}) 
         });
         date = await response.json()
-        console.log(data)*/
-
+        console.log(data)
     }
 
 </script>
@@ -99,6 +99,9 @@ onMount( async ()=>{
                     <Input inputId="birthday" bind:value={birthday} label="Birthday" inputType="date"/>
                     {/if}
                     {#if birthday}
+                    <Input inputId="imgLink" bind:value={imgLink} label="Link to image" inputType="text"/>
+                    {/if}
+                    {#if imgLink}
                     <Input inputId="city" bind:value={postalcode} label="Postalcode" inputType="number"/>
                     <Button on:click={submitSignup} buttonText="Create account!" butDisabled="{!first || !last || !email || !birthday}" />
                     {/if}

@@ -1,7 +1,7 @@
 <script>
-    import Navbar from "../../components/Navbar/Navbar.svelte"
     import Header from "../../components/Header/Header.svelte"
     import Button from "../../components/Button/Button.svelte"
+    import Match from "./Match/Match.svelte";
 
     import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
@@ -33,7 +33,8 @@ let matches = [{name: "Placeholder",
         artistType: "",
         bio: "You have not yet made a bio!"}]
 let generator;
-let userToSwipe=true;
+let userToSwipe=false;
+
     onMount(async ()=>{
     const token = localStorage.getItem("accesToken")
 
@@ -49,6 +50,8 @@ let userToSwipe=true;
     users = userData.data;
     generator = getUser(1, users); 
     user = generator.next().value
+    console.log(user)
+    userToSwipe = true;
     }
     else{
         userToSwipe = false;
@@ -125,30 +128,23 @@ function switchChatState(){
     <div class="matching-container">
         <h1>Find your future band buddies!</h1>
         {#if userToSwipe}
-        <div class="user">
-            <h2>{user.name}</h2>
-            <p>{user.artistType}</p>
-        </div>
+        <Match match={user} />
         <div class="buttons-container">
             <Button buttonId="like" buttonText="Like" on:click={handleClick}/>
             <Button buttonId="dislike" buttonText="Dislike" on:click={handleClick}/>
         </div>
         {:else}
-        <div class="user">
-            <h2>Sorry, currently there are no users to rate :/</h2>
-        </div>
+            <h2>Sorry, currently there are no users to rate 😞</h2>
         {/if}
     </div>
     <div class="matches">
         {#each matches as match}
-        <div class="match">
-            <h2>{match.name +" "+ match.lastName}</h2>
-            <p>Artisttype: {match.artistType}</p>
-            <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
+            <Match match={match}>
+                <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
+            </Match>
             {#if chatOpen}
             <Chat client={client}/>
             {/if}
-        </div>
         {/each}
     </div>
     </div>
@@ -189,7 +185,9 @@ function switchChatState(){
 
     h2{
         align-self: center;
-        
+        font-size: 25px;
+        font-style: bolder;
+        z-index: 10;
     }
 
     .content-container{
@@ -218,7 +216,7 @@ function switchChatState(){
     .matches{
         z-index: 10;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         background-color: rgb(0,0,0);
@@ -233,30 +231,6 @@ function switchChatState(){
         width: 80%;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
         padding: 3%;
-    }
-
-    .match{
-        display: flex;
-        flex-direction: column;
-        width: 25%;
-        background-color: #FF3CAC;
-        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-        z-index: 5;
-        border: 3px solid #f1f1f1;
-    }
-
-    .user{
-        background-color: #FF3CAC;
-        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-        z-index: 5;
-        border: 3px solid #f1f1f1;
-        min-width: 30%;
-        min-height: 50px;
-        text-align: center;
-        width: 30%;
-        margin: 2%;
-        border-radius: 2%;
-        justify-self: center;
     }
 
     .buttons-container{

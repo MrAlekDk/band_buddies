@@ -1,18 +1,23 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
 import Modal from "../../components/Modal/PostModal.svelte"
+import Post from "./Post/Post.svelte"
 import Button from "../../components/Button/Button.svelte"
 import { Modals, closeModal } from 'svelte-modals'
 import { openModal } from 'svelte-modals'
 import { onMount } from 'svelte'
 
-let posts = ["hello", "hello2"]
+let posts = [];
 
 function handleClick() {
-        openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal" })
+        openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
     }
 
-onMount(async ()=>{
+onMount(()=>{
+    fetchPosts();
+});
+
+async function fetchPosts(){
     const res = await fetch("http://localhost:3000/post", {
             method: "GET",
             headers:{
@@ -21,13 +26,18 @@ onMount(async ()=>{
         });
     const data = await res.json();
     posts = data.data;
-});
+
+}
+
+const update = () => {
+    fetchPosts();
+  }
 </script>
 
 <div class="bg-image"></div>
     <div class="content-container">
         <Header />
-        <Modal/>
+        <Modal isOpen={false}></Modal>
         <Modals>
             <div slot="svelte-modal" on:click={closeModal}></div>
         </Modals>
@@ -38,17 +48,11 @@ onMount(async ()=>{
             </div>
             <div class="posts">
                 {#each posts as post}
-                <div class="post">
-                    <h2>{post.title}</h2>
-                    <p>{post.content}</p>
-                    <p>{post.auther}</p>
-                    <p>{post.date}</p>
-                </div>
+                <Post postInfo={post}></Post>
                 {/each}
             </div>
         </div>
     </div>
-
 
 <style>
 :global(body){
@@ -108,19 +112,6 @@ onMount(async ()=>{
         flex-wrap: wrap;
         justify-content: space-around;
 
-    }
-
-    .post{
-        background-color: #FF3CAC;
-        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
-        border: 3px solid #f1f1f1;
-        min-width: 30%;
-        min-height: 50px;
-        text-align: center;
-        width: 30%;
-        margin: 2%;
-        border-radius: 2%;
     }
 
     .buttons-container{

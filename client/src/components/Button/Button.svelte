@@ -34,6 +34,7 @@ z-index: 5;
 }
 
 .button span {
+  width: 80%;
   cursor: pointer;
   display: inline-block;
   position: relative;

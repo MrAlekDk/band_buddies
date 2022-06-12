@@ -26,9 +26,6 @@ let inputProps = {
             {...inputProps} placeholder={placeholder}>
 </div>
 
-<!--label for="first-name">First Name</label>
-<input id="first-name" bind:value={first} placeholder="Mathias" maxlength=20 minlength=2-->
-
 <style>
 
 input, select{
@@ -52,6 +49,7 @@ input, select{
     label{
         text-align: start;
         margin-bottom: 4%;
+        color: white;
     }
 
     .row{
@@ -68,6 +66,7 @@ input, select{
   -o-animation: fadeIn 0.5s;
   -ms-animation: fadeIn 0.5s;
 }
+
 @keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:1;}

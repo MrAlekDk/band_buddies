@@ -1,20 +1,24 @@
 <script>
     import { closeModal } from 'svelte-modals';
+    import { createEventDispatcher } from 'svelte';
     import Input from "../../components/Input/Input.svelte"
     import Button from "../Button/Button.svelte"
 
-    async function submit(){
-        const title = document.getElementById("post-title").value
-        const content = document.getElementById("post-content").value
+   
+    let postTitle = "";
+    let content ="";
+    export let update;
 
-        const createdDate = `${Date.prototype.getUTCFullYear} + ${Date.prototype.getUTCMonth} + ${Date.prototype.getUTCDate}`
+    async function submit(){
+        const todaysDate = new Date;
+        const createdDate = `${todaysDate.getUTCFullYear()}-${todaysDate.getUTCMonth()}-${todaysDate.getUTCDate()}`
 
         let newPost = {
-            title: title,
+            title: postTitle,
             content: content,
             date: createdDate
         }
-
+        console.log(newPost)
         const token = localStorage.getItem("accesToken")
         const response = await fetch("http://localhost:3000/post", {
             method: 'POST', 
@@ -28,7 +32,7 @@
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify({post: newPost}) 
         });
-        console.log(response)
+        update();
         closeModal();
     }
 
@@ -44,19 +48,21 @@
                 <div class="modal-header">
                     <h1>{title}</h1>
                     <button type="button" class="btn-close box-content w-4 h-4 p-1 opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-white hover:opacity-100 hover:no-underline"
-                            data-bs-dismiss="modal" aria-label="Close" on:click={closeModal}>X</button>
+                             aria-label="Close" on:click={closeModal}>X</button>
                 </div>
                 <div class="modal-body">
-                    <Input id="post-title" type="text" label="Title"/>
-                    <Input id="post-content" type="text" label="Content" specStyle={"height: 100px; padding-bottom: 80px; overflow-x: wrap"}/>
+                    <Input inputId="post-title" bind:value={postTitle} label="Post Title" placeholder="A new post" inputType="text" />
+                    <Input inputId="post-content" bind:value={content} label="Content" placeholder="A new post" specStyle={"height: 100px; padding-bottom: 80px; overflow-x: wrap"} inputType="text" />
+                    <slot></slot>
                 </div>
-                <div class="modal-footer">
-                    <Button on:click={submit} data-bs-dismiss="modal" buttonText="Create post"/>
+                <div class="modal-footer" on:message>
+                    <Button on:click={submit} buttonText="Create post" butDisabled={!postTitle || !content} />
                 </div>
             </div>
         </div>
     </div>
 {/if}
+
 <style>
     .modal {
         display: flex;

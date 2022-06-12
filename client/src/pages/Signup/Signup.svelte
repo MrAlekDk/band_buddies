@@ -82,7 +82,6 @@ onMount( async ()=>{
         <div class="signup-container">
             <h2>Create new account:</h2>
             <div class="inputs">
-                <div class="row">
                     <Select inputId="artist" bind:value={artistType} label="You are..." />
                     {#if artistType}
                     <Input inputId="first-name" bind:value={first} label="First Name" placeholder="Mathias" />
@@ -104,8 +103,6 @@ onMount( async ()=>{
                     <Button on:click={submitSignup} buttonText="Create account!" butDisabled="{!first || !last || !email || !birthday}" />
                     {/if}
                 </div>
-
-            </div>
         </div>
     </div>
 
@@ -166,13 +163,8 @@ onMount( async ()=>{
 
     .inputs{
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .row{
-        display: flex;
         flex-direction: column;
+        align-self: center;
         min-width: 35%;
         max-width: 45%;
     }

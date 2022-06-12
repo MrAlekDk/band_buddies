@@ -9,12 +9,15 @@
     let input;
 
     export let client;
+    export let switchChatState;
 
     function sendMessage(){
-      console.log(client)
         let message = client.name + ": " + input.value;
-        socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink});
-        input.value = ""
+        if(input.value.length >= 2){
+          socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink});
+          input.value = ""
+        }
+        
     }
 
     socket.on("private message", ({data})=>{
@@ -30,6 +33,7 @@ onMount(async ()=>{
     let modal = document.getElementById("myModal");
     modal.style.display = "block";
 
+    console.log(messages)
 })
 
 function getTime(){
@@ -41,13 +45,13 @@ function getTime(){
 <div id="myModal" class="modal">
 
   <div class="modal-content">
-    <span id="close" class="close">&times;</span>
+    <span id="close" class="close" on:click={switchChatState}>&times;</span>
     <div class="chat-box">
         <h2>Chat with "Band buddy"</h2>
         <div class="message-box">
             {#each messages as message}
             <div class="message">
-              <img src={message.img || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}>
+              <img src={client.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"} alt="Profile pic">
               <p>{message}</p>
               <p>{getTime()}</p>
             </div>

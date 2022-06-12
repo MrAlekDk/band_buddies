@@ -6,6 +6,13 @@
     import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
 
+    import { Modals, closeModal } from 'svelte-modals'
+    import { openModal } from 'svelte-modals'
+
+    function handleModalClick() {
+        openModal(Chat, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
+    }
+
     //generator
     function* getUser(pageSize = 1, list) {
     let output = {};
@@ -110,7 +117,7 @@ let user ={};
 let chatOpen = false;
 let chatText = "Open chat";
 
-function switchChatState(){
+const switchChatState = ()=>{
     if(chatOpen){
         chatOpen = false;
         chatText = "Open chat";}
@@ -143,7 +150,7 @@ function switchChatState(){
                 <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
             </Match>
             {#if chatOpen}
-            <Chat client={client}/>
+            <Chat client={client} switchChatState={switchChatState}/>
             {/if}
         {/each}
     </div>

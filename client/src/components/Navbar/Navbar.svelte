@@ -2,6 +2,12 @@
 
 const token = localStorage.getItem("accesToken") || false
 
+
+function logOut(){
+    console.log("logout")
+    localStorage.removeItem("accesToken")
+    
+}
 </script>
 
 <nav class="navbar-container">
@@ -12,7 +18,7 @@ const token = localStorage.getItem("accesToken") || false
     {:else}
     <a href="/profile" type="button" class="glow-on-hover">Profile</a>
     <a href="/matching" type="button" class="glow-on-hover">Matching</a>
-    <a href="/logout" type="button" class="glow-on-hover" on:click={localStorage.removeItem("accesToken")}>Log out</a>
+    <a href="/" type="button" class="glow-on-hover" on:click={logOut}>Log out</a>
     {/if}
 </nav>
 
@@ -27,7 +33,7 @@ const token = localStorage.getItem("accesToken") || false
     min-width: 40%;
 }
 
-a{
+a, button{
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.4); 
     color: white;

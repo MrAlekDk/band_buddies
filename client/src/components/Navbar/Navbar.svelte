@@ -30,7 +30,7 @@ function logOut(){
     z-index: 2;
     align-self: center;
     justify-content: flex-end;
-    min-width: 40%;
+    min-width: 50%;
 }
 
 a, button{

@@ -74,15 +74,8 @@ let userToSwipe=false;
         const matchesData = await res2.json();
         matches = matchesData.data;
 
-        const res = await fetch("http://localhost:3000/user", {
-            method: "GET",
-            headers:{
-                "content-type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-        });
-    const data = await res.json();
-    client = data.user
+        fetchUser();
+
     })
     
 
@@ -95,6 +88,19 @@ let userToSwipe=false;
         catch(err){
             console.log(err)
         }
+    }
+
+    async function fetchUser(){
+        const token = localStorage.getItem("accesToken")
+        const res = await fetch("http://localhost:3000/user", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+    const data = await res.json();
+    client = data.user
     }
 
     async function submitRating(rating){
@@ -111,6 +117,11 @@ let userToSwipe=false;
         referrerPolicy: 'no-referrer', 
         body: JSON.stringify({rating: rating, userId: user._id}) 
         });
+
+        const data = await response.json();
+        console.log(data)
+        fetchUser();
+        localStorage.setItem("accesToken", data.accesToken);
     }
 
 let user ={};
@@ -149,10 +160,10 @@ const switchChatState = ()=>{
             <Match match={match}>
                 <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
             </Match>
-            {#if chatOpen}
-            <Chat client={client} switchChatState={switchChatState}/>
-            {/if}
         {/each}
+        {#if chatOpen}
+            <Chat client={client} switchChatState={switchChatState}/>
+        {/if}
     </div>
     </div>
 

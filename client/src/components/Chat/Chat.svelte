@@ -10,6 +10,7 @@
 
     export let client;
     export let switchChatState;
+    export let match;
 
     function sendMessage(){
         let message = client.name + ": " + input.value;
@@ -22,6 +23,7 @@
 
     socket.on("private message", ({data})=>{
         messages = [...messages, data]
+        console.log(messages)
     })
 
 
@@ -47,12 +49,12 @@ function getTime(){
   <div class="modal-content">
     <span id="close" class="close" on:click={switchChatState}>&times;</span>
     <div class="chat-box">
-        <h2>Chat with "Band buddy"</h2>
+        <h2>Chat with Band Buddy</h2>
         <div class="message-box">
             {#each messages as message}
             <div class="message">
-              <img src={client.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"} alt="Profile pic">
-              <p>{message}</p>
+              <img src={message.img || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"} alt="Profile pic">
+              <p>{message.message}</p>
               <p>{getTime()}</p>
             </div>
             {/each}

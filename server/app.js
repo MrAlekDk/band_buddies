@@ -33,10 +33,11 @@ io.on("connection", (socket)=>{
 
   socket.on("private message", (data)=>{
       console.log(data);
-      socket.to("some room").emit("private message", {data: data.msg});
-      socket.emit("private message", {data: data.msg})
+      socket.to("some room").emit("private message", {data: {message: data.msg, img: data.img}});
+      socket.emit("private message", {data: {message: data.msg, img: data.img}})
   })
 })
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));
@@ -45,7 +46,3 @@ app.get('*', (req, res) => {
 server.listen(PORT, ()=>{
   console.log("Now running on port: ", PORT);
 })
-
-/*app.listen(PORT, ()=>{
-    console.log("Now running on port: ", PORT);
-});*/

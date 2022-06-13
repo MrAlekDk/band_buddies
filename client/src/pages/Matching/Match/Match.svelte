@@ -25,7 +25,8 @@ img{
 .match{
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 35%;
+        height: 200px;
         background-color: #FF3CAC;
         background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
         z-index: 5;
@@ -39,12 +40,11 @@ img{
         border: 3px solid #f1f1f1;
         min-width: 30%;
         width: 50%;
-        min-height: 50px;
         text-align: center;
-        width: 30%;
         margin: 2%;
         border-radius: 2%;
         justify-self: center;
+        height: 700px;
     }
 
 </style>

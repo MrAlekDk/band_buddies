@@ -5,13 +5,15 @@ const token = localStorage.getItem("accesToken") || false
 </script>
 
 <nav class="navbar-container">
+    <a href="/posts" type="button" class="glow-on-hover">Posts</a>
     {#if !token}
     <a href="/signup" type="button" class="glow-on-hover">Signup</a>
     <a href="/login" type="button" class="glow-on-hover">Login</a>
-    {/if}
+    {:else}
     <a href="/profile" type="button" class="glow-on-hover">Profile</a>
-    <a href="/posts" type="button" class="glow-on-hover">Posts</a>
     <a href="/matching" type="button" class="glow-on-hover">Matching</a>
+    <a href="/logout" type="button" class="glow-on-hover" on:click={localStorage.removeItem("accesToken")}>Log out</a>
+    {/if}
 </nav>
 
 <style>

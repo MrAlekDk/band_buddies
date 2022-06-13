@@ -28,7 +28,7 @@ onMount( async ()=>{
         });
     const data = await res.json();
     user = data.user
-    console.log(user)
+    console.log(user.imgLink)
 });
     
 async function updateUser(){
@@ -243,6 +243,7 @@ img{
     border-radius: 7%;
     margin-bottom: 5%;
     max-width: 50%;
+    min-width: 40%;
 }
 
 .row{

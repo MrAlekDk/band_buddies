@@ -32,15 +32,20 @@ router.post("/rate", authToken, (req,res)=>{
     const user = req.user;
     const rating = req.body.rating
     const ratedUserId = req.body.userId
-    console.log(rating,ratedUserId)
+
     if(rating === "like"){
         db.users.updateOne({_id : ObjectId(user._id)}, {$addToSet: {likedUsers: ratedUserId}});
+        res.redirect("/refreshToken")
     }
     else if(rating === "dislike"){
         db.users.updateOne({_id : ObjectId(user._id)}, {$addToSet: {dislikedUsers: ratedUserId}});
+        res.redirect("/refreshToken")
     }
-
-    res.sendStatus(200)
+    else{
+        res.sendStatus(500)
+    }
 });
+
+
 
 export const matchingRouter = router;

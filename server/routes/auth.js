@@ -50,6 +50,31 @@ router.post("/login", async (req,res)=>{
     }
 });
 
+router.get("/refreshToken", authenticateToken, async(req,res)=>{
+    console.log("Refreshing")
+    //console.log(req.user)
+
+    let refreshedUser = await db.users.findOne({email: req.user.email});
+    
+    if(refreshedUser === null){
+        res.status(404).send("User doesn't exist");
+    }
+    else{
+        try{
+            console.log("start of try")
+                const accesToken = jwt.sign(refreshedUser, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'});
+                console.log(accesToken)
+                refreshedUser.token = accesToken;
+                res.json({accesToken});
+        }
+        catch{
+            console.log("error")
+            res.sendStatus(500);
+        }
+    }
+
+});
+
 
 function authenticateToken(req, res, next){
     const authHeader = req.headers["authorization"]
@@ -63,6 +88,7 @@ function authenticateToken(req, res, next){
 }
 
 router.post("/logOut", (req,res)=>{
+    console.log("log out")
         res.sendStatus(200)
     });
 

@@ -1,5 +1,6 @@
 <script>
-    import Header from "../../components/Header/Header.svelte"
+    import Header from "../../components/Header/Header.svelte";
+    import Button from "../../components/Button/Button.svelte";
     import { onMount } from "svelte"
 
     let user = {
@@ -69,37 +70,37 @@ function handleClick(){
     <div class="bg-image"></div>
     <div class="content-container">
         <Header />
-        <h1>Welcome {user.name}</h1>
         <div class="profile-container">
-            <div class="row">
-                <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User image">
-                <div class="information">
-                    <input class="bio" id="bio-input" value={(user.bio)} disabled>
-                    <button class="button" on:click={handleClick}><span>{buttonText}</span></button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="information-container">
+            <h1>Welcome {user.name}</h1>
+            <div class="box">
+                <div class="row">
+                    <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User image">
                     <div class="information">
-                        <p>Name: {`${user.name} ${user.lastName}`}</p>
-                    </div>
-                    <div class="information">
-                        <p>Birthday: {`${user.birthday}`}</p>
-                    </div>
-                    <div class="information">
-                        <p>Artist type: {`${user.artistType}`}</p>
-                    </div>
-                    <div class="information">
-                        <p>City: {`${user.postalcode}`}</p>
+                        <p>{user.bio}</p>
+                        <!--input class="bio" id="bio-input" disabled>
+                        <button class="button" on:click={handleClick}><span>{buttonText}</span></button>
+                        <Input buttonId="bio-input" inputId="city" bind:value={user.bio} label="Bio" inputType="text" disabled={true}/>
+                        <Button class="button" on:click={handleClick} buttonText="Edit bio" /-->
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="information-container">
-                    <div class="information">
-                        <p>Number of matches: {user.likedUsers.length}</p>
-                    </div>
-                    <div class="information">
+                <div class="row">
+                    <div class="information-container">
+                        <h2>Information</h2>
+                        <div class="information">
+                            <h3>{`${user.name} ${user.lastName}`}</h3>
+                        </div>
+                        <div class="information">
+                            <p>Birthday: {`${user.birthday}`}</p>
+                        </div>
+                        <div class="information">
+                            <p>Artist type: {`${user.artistType}`}</p>
+                        </div>
+                        <div class="information">
+                            <p>City: {`${user.postalcode}`}</p>
+                        </div>
+                        <div class="information">
+                            <p>Number of matches: {user.likedUsers.length}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,6 +149,7 @@ function handleClick(){
     h1{
         background-color: rgb(0,0,0);
         background-color: rgba(0,0,0, 0.4); 
+        align-self: center;
         color: white;
         font-weight: bold;
         border: 3px solid #f1f1f1;
@@ -158,6 +160,12 @@ function handleClick(){
         width: 60%;
         font-size: 50px;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
+    }
+
+    .box{
+        display: flex;
+        flex: row;
+        justify-content: space-around;
     }
 
     .content-container{
@@ -175,18 +183,23 @@ function handleClick(){
 
     .profile-container{
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.4); 
+        flex-direction: column;
+        justify-content: center;
+        background-color: #FF3CAC;
+        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
         color: white;
         font-weight: bold;
         border: 3px solid #f1f1f1;
+        border-radius: 1%;
         padding: 20px;
         min-width: 50%;
         width: 60%;
         z-index: 5;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
+    }
+
+    .information-container{
+        
     }
 
     input{
@@ -242,12 +255,12 @@ img{
     box-shadow: 10px 10px 5px rgb(7, 7, 7);
     border-radius: 7%;
     margin-bottom: 5%;
-    max-width: 50%;
+    max-width: 100%;
     min-width: 40%;
 }
 
 .row{
-    max-width: 30%;
+    max-width: 50%;
 }
 
     </style>

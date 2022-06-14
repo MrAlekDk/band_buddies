@@ -78,18 +78,21 @@ function getTime(){
   left: 0;
   top: 0;
   width: 100%; 
-  height: 100%; 
-  overflow: auto; 
+  height: 100%;
+  margin-bottom: 10%;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4); 
 }
 
 .modal-content {
-    display: flex;
-  background-color: #000000;
-  margin: 15% auto;
+  display: flex;
+  background-color: #FF3CAC;
+  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+  box-shadow: 10px 10px 5px rgb(7, 7, 7);
+  margin: 5% auto;
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 1%;
   width: 80%; 
   height: 80%;
 }

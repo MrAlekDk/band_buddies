@@ -249,6 +249,7 @@ const switchChatState = ()=>{
         width: 80%;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
         padding: 3%;
+        flex-wrap: wrap;
     }
 
     .buttons-container{

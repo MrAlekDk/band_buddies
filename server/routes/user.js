@@ -12,6 +12,27 @@ router.get("/user", authToken, (req,res)=>{
     res.json({user});
 });
 
+router.post("/register", async (req,res)=>{
+    const { user } = req.body;
+    const login = await db.users.findOne({email: user.email});
+    if(login === null){
+        try{
+            const hashedPassword = await bcrypt.hash(user.password, 10);
+            user.password = hashedPassword;
+            user.likedUsers=[]
+            user.dislikedUsers=[]
+            db.users.insertOne(user);
+            //mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
+            res.sendStatus(200);
+        }
+        catch{
+            res.sendStatus(400);
+        }
+        return;
+    }
+    res.sendStatus(403);
+});
+
 router.patch("/user", authToken, (req,res)=>{
     let data = req.body;
     const id = req.user._id;

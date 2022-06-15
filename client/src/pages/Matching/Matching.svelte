@@ -126,12 +126,14 @@ let userToSwipe=false;
 let user ={};
 let chatOpen = false;
 let chatText = "Open chat";
+let match={};
 
-const switchChatState = ()=>{
+const switchChatState = (matchId)=>{
     if(chatOpen){
         chatOpen = false;
         chatText = "Open chat";}
     else {
+        match = matchId;
         chatOpen = true;
         chatText = "Close chat";
     } 
@@ -156,11 +158,11 @@ const switchChatState = ()=>{
     <div class="matches">
         {#each matches as match}
             <Match match={match}>
-                <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={switchChatState}/>
+                <Button buttonId="open-chat" buttonText={"Chat with " + match.name} on:click={() => switchChatState(match._id)}/>
             </Match>
         {/each}
         {#if chatOpen}
-            <Chat client={client} switchChatState={switchChatState}/>
+            <Chat client={client} match={match} switchChatState={switchChatState}/>
         {/if}
     </div>
     </div>

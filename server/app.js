@@ -24,18 +24,39 @@ const server = http.createServer(app);
 import { Server } from "socket.io";
 const io = new Server(server);
 
+
+let rooms=[];
+
 io.on("connection", (socket)=>{
   console.log("connection made", socket.id)
-  const username = socket.handshake.auth.username;
-  console.log(username)
+  let clientId = socket.handshake.auth.clientId
+  let matchId = socket.handshake.auth.matchId
+  console.log(socket.handshake.auth)
 
-  socket.join("some room");
+  if(rooms.includes(matchId+clientId)){
+    console.log("Room found")
+    socket.join(rooms.find(room => room===matchId+clientId));
+  }
+  else{
+    console.log("Room not found")
+    rooms.push(clientId+matchId)
+    socket.join(clientId+matchId);
+  }
 
   socket.on("private message", (data)=>{
-      console.log(data);
-      socket.to("some room").emit("private message", {data: {message: data.msg, img: data.img}});
+    let clientId = socket.handshake.auth.clientId
+    let matchId = socket.handshake.auth.matchId
+    let room="";
+      if(rooms.find(room => data.clientId+matchId===room)){
+         room = clientId+matchId;
+      }
+      else{
+        room = matchId+clientId;
+      }
+      socket.to(room).emit("private message", {data: {message: data.msg, img: data.img}});
       socket.emit("private message", {data: {message: data.msg, img: data.img}})
   })
+
 })
 
 

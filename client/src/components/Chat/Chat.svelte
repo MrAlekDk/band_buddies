@@ -1,6 +1,6 @@
 <script>
     import io from "socket.io-client";
-    import { onMount } from "svelte"
+    import { onMount, onDestroy } from "svelte"
 
     import Button from "../Button/Button.svelte"
 
@@ -14,8 +14,9 @@
 
     function sendMessage(){
         let message = client.name + ": " + input.value;
+
         if(input.value.length >= 2){
-          socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink});
+          socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink, clientId: client._id, matchId: match});
           input.value = ""
         }
         
@@ -29,13 +30,16 @@
 
 onMount(async ()=>{
     input = document.getElementById("message")
-    console.log("open modal")
-    socket.auth = {username: "Alek"}
+    console.log(client._id, match)
+    socket.auth = {username: client.email, clientId: client._id, matchId:match }
     socket.connect()
     let modal = document.getElementById("myModal");
     modal.style.display = "block";
 
-    console.log(messages)
+})
+
+onDestroy( ()=>{
+  socket.disconnect();
 })
 
 function getTime(){
@@ -43,7 +47,6 @@ function getTime(){
   return `${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
 }
 </script>
-
 <div id="myModal" class="modal">
 
   <div class="modal-content">

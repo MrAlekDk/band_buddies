@@ -4,11 +4,11 @@ export let postInfo;
 </script>
 
 <div class="post">
-    <h2>{postInfo.title}</h2>
+    <h2>{postInfo.title || "No title"}</h2>
     <div class="meta">
         <p>Posted by {postInfo.auther} {postInfo.date}</p>
     </div>
-    <p>{postInfo.content}</p>
+    <p>{postInfo.content || "No content"}</p>
 </div>
 <style>
     .post{

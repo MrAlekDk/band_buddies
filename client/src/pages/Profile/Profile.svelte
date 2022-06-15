@@ -159,6 +159,7 @@ function handleClick(){
         width: 60%;
         font-size: 50px;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        text-shadow: 2px 2px 4px #000000;
     }
 
     .box{

@@ -78,7 +78,6 @@ let userToSwipe=false;
 
     })
     
-
     function handleClick(event){
         const target = event.target.id;
         submitRating(target);
@@ -139,7 +138,6 @@ const switchChatState = ()=>{
 }
 
 </script>
-
     <div class="bg-image"></div>
     <div class="content-container">
             <Header />
@@ -250,6 +248,7 @@ const switchChatState = ()=>{
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
         padding: 3%;
         flex-wrap: wrap;
+        overflow: scroll;
     }
 
     .buttons-container{

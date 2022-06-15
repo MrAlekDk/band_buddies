@@ -48,7 +48,7 @@ h1{
     align-self: center;
     z-index: 2;
     text-align: center;
-    text-shadow: 3px 3px #141313;
+    text-shadow: 2px 2px 4px #000000;
     font-size: 60px;
     user-select: none;
     outline: none;

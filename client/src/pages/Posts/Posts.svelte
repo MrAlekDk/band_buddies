@@ -83,6 +83,7 @@ const update = () => {
         align-self: center;
         min-width: 50%;
         font-size: 50px;
+        text-shadow: 2px 2px 4px #000000;
     }
 
     .content-container{

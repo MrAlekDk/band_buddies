@@ -71,7 +71,7 @@ function handleClick(){
     <div class="content-container">
         <Header />
         <div class="profile-container">
-            <h1>Welcome {user.name}</h1>
+            <h1>Profile of {user.name}</h1>
             <div class="box">
                 <div class="row">
                     <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User image">
@@ -85,9 +85,8 @@ function handleClick(){
                 </div>
                 <div class="row">
                     <div class="information-container">
-                        <h2>Information</h2>
                         <div class="information">
-                            <h3>{`${user.name} ${user.lastName}`}</h3>
+                            <h2>{`${user.name} ${user.lastName}`}</h2>
                         </div>
                         <div class="information">
                             <p>Birthday: {`${user.birthday}`}</p>
@@ -99,7 +98,7 @@ function handleClick(){
                             <p>City: {`${user.postalcode}`}</p>
                         </div>
                         <div class="information">
-                            <p>Number of matches: {user.likedUsers.length}</p>
+                            <p>Matches: {user.likedUsers.length}</p>
                         </div>
                     </div>
                 </div>
@@ -184,7 +183,6 @@ function handleClick(){
     .profile-container{
         display: flex;
         flex-direction: column;
-        justify-content: center;
         background-color: #FF3CAC;
         background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
         color: white;
@@ -196,6 +194,7 @@ function handleClick(){
         width: 60%;
         z-index: 5;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        min-height: 700px;
     }
 
     .information-container{
@@ -255,12 +254,18 @@ img{
     box-shadow: 10px 10px 5px rgb(7, 7, 7);
     border-radius: 7%;
     margin-bottom: 5%;
-    max-width: 100%;
+    max-width: 60%;
     min-width: 40%;
+    align-self: start;
 }
 
 .row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     max-width: 50%;
+    min-width: 45%;
+    text-align: start;
 }
 
     </style>

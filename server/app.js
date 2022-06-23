@@ -24,9 +24,7 @@ const server = http.createServer(app);
 import { Server } from "socket.io";
 const io = new Server(server);
 
-
 let rooms=[];
-
 io.on("connection", (socket)=>{
   let clientId = socket.handshake.auth.clientId
   let matchId = socket.handshake.auth.matchId
@@ -43,8 +41,8 @@ io.on("connection", (socket)=>{
   }
 
   socket.on("private message", (data)=>{
-    let clientId = socket.handshake.auth.clientId
-    let matchId = socket.handshake.auth.matchId
+    //let clientId = socket.handshake.auth.clientId
+    //let matchId = socket.handshake.auth.matchId
     let room="";
       if(rooms.find(room => data.clientId+matchId===room)){
          room = clientId+matchId;
@@ -57,7 +55,6 @@ io.on("connection", (socket)=>{
   })
 
 })
-
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));

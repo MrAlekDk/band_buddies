@@ -9,7 +9,7 @@
         <div class="meta">
             <h2>{match.name +" "+ match.lastName}</h2>
             <p>{match.artistType}</p>
-            <p>{match.bio || "No bio yet"}</p>
+            <p class="bio">{match.bio || "No bio yet"}</p>
         </div>
         <slot></slot>
 </div>
@@ -23,7 +23,9 @@
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
         border-radius: 7%;
         margin-bottom: 0%;
-        width:50%;
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
         align-self: center;
     }
 
@@ -32,10 +34,11 @@
         background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
         z-index: 5;
         border: 3px solid #f1f1f1;
-        min-width: 25%;
-        max-width: 500px;
+        width: 30%;
         text-align: center;
-        margin: 2%;
+        margin-bottom:2%;
+        margin-right:1%;
+        margin-left:1%;
         border-radius: 2%;
         justify-self: center;
         display:flex;

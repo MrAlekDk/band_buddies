@@ -24,13 +24,11 @@
 
     socket.on("private message", ({data})=>{
         messages = [...messages, data]
-        console.log(messages)
     })
 
 
 onMount(async ()=>{
     input = document.getElementById("message")
-    console.log(client._id, match)
     socket.auth = {username: client.email, clientId: client._id, matchId:match }
     socket.connect()
     let modal = document.getElementById("myModal");

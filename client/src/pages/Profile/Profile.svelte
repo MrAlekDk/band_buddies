@@ -15,6 +15,7 @@
         likedUsers: [],
         imgLink: "https://scontent-cph2-1.xx.fbcdn.net/v/t39.30808-6/276252571_5326678807356896_716250865442285171_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=D_FS8rxPSEMAX_x6Wpr&_nc_ht=scontent-cph2-1.xx&oh=00_AT-TrDw45ce5vN6MD5hBKW0cbQkiAj9vOKo3v1bvwzyFww&oe=62ABE9E0"
     };
+    
     let editing = false;
     let buttonText = "Edit";
 
@@ -74,7 +75,7 @@ function handleClick(){
             <h1>Profile of {user.name}</h1>
             <div class="box">
                 <div class="row">
-                    <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User image">
+                    <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User">
                     <div class="information">
                         <p>{user.bio}</p>
                         <!--input class="bio" id="bio-input" disabled>
@@ -108,24 +109,6 @@ function handleClick(){
 
 
 <style>
-
-.input, .textarea {
-  border: 1px solid #ccc;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 1px 6px;
-  max-width: 40%;;
-}
-
-.input-wrap {
-  position: relative;
-}
-.input-wrap .input {
-  position: absolute;
-  width: 100%;
-  left: 0;
-}
-
     :global(body){
         margin:0;
         padding:0;

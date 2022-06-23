@@ -28,6 +28,7 @@
         index += pageSize;
     }
 }
+
 let client ={};
 
 let users =[{id:0, name:""}]
@@ -57,7 +58,6 @@ let userToSwipe=false;
     users = userData.data;
     generator = getUser(1, users); 
     user = generator.next().value
-    console.log(user)
     userToSwipe = true;
     }
     else{

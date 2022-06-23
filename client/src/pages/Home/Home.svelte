@@ -1,5 +1,4 @@
 <script>
-    import Navbar from "../../components/Navbar/Navbar.svelte"
     import Header from "../../components/Header/Header.svelte"
     let backgroundUrl = "./images/duo_guitar.jpg"
     

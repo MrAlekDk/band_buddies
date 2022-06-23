@@ -1,5 +1,4 @@
 <script>
-
 export let postInfo;
 </script>
 
@@ -10,6 +9,7 @@ export let postInfo;
     </div>
     <p>{postInfo.content || "No content"}</p>
 </div>
+
 <style>
     .post{
         background-color: #FF3CAC;

@@ -7,7 +7,7 @@ import path from "path";
 app.use(express.static(path.resolve("../client/public")));
 
 
-import {authRouter, authToken} from "./routes/auth.js";
+import {authRouter} from "./routes/auth.js";
 app.use(authRouter);
 
 import {profileRouter} from "./routes/user.js";
@@ -28,17 +28,16 @@ const io = new Server(server);
 let rooms=[];
 
 io.on("connection", (socket)=>{
-  console.log("connection made", socket.id)
   let clientId = socket.handshake.auth.clientId
   let matchId = socket.handshake.auth.matchId
-  console.log(socket.handshake.auth)
 
   if(rooms.includes(matchId+clientId)){
-    console.log("Room found")
     socket.join(rooms.find(room => room===matchId+clientId));
   }
+  else if(rooms.includes(clientId+matchId)){
+    socket.join(rooms.find(room => room===clientId+matchId));
+  }
   else{
-    console.log("Room not found")
     rooms.push(clientId+matchId)
     socket.join(clientId+matchId);
   }

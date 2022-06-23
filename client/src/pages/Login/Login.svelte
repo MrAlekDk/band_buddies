@@ -34,8 +34,8 @@ async function submitLogin(){
 
         const from = ($location.state && $location.state.from) || "/";
         navigate("/profile", from, { replace: true });
-
 }
+
 </script>
 
 <div class="bg-image"></div>

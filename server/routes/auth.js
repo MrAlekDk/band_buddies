@@ -1,7 +1,6 @@
 import express from "express";
 import db from "../database/createConnection.js";
 import bcrypt from "bcrypt";
-import mailer from "../mailer/emailer.js"
 import jwt from "jsonwebtoken"
 
 const router = express.Router();
@@ -31,9 +30,6 @@ router.post("/login", async (req,res)=>{
 });
 
 router.get("/refreshToken", authenticateToken, async(req,res)=>{
-    console.log("Refreshing")
-    //console.log(req.user)
-
     let refreshedUser = await db.users.findOne({email: req.user.email});
     
     if(refreshedUser === null){

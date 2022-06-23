@@ -18,7 +18,7 @@
             content: content,
             date: createdDate
         }
-        console.log(newPost)
+        
         const token = localStorage.getItem("accesToken")
         const response = await fetch("http://localhost:3000/post", {
             method: 'POST', 

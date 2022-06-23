@@ -30,15 +30,9 @@ let inputProps = {
 
 <style>
 
-input, select{
+select{
       background-color: rgb(0,0,0);
       color: white;
-    }
-
-    .inputs{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
     }
 
     .input-box{
@@ -51,13 +45,6 @@ input, select{
     label{
         text-align: start;
         margin-bottom: 4%;
-    }
-
-    .row{
-        display: flex;
-        flex-direction: column;
-        min-width: 35%;
-        max-width: 45%;
     }
 
     .fade-in-input {

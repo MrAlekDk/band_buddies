@@ -4,7 +4,6 @@ const token = localStorage.getItem("accesToken") || false
 
 
 function logOut(){
-    console.log("logout")
     localStorage.removeItem("accesToken")
     
 }
@@ -33,7 +32,7 @@ function logOut(){
     min-width: 50%;
 }
 
-a, button{
+a{
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.4); 
     color: white;

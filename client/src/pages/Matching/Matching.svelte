@@ -57,33 +57,24 @@ let userToSwipe=false;
     users = userData.data;
     generator = getUser(1, users); 
     user = generator.next().value
-    userToSwipe = true;
+    if(user){
+        userToSwipe = true;
     }
     else{
         userToSwipe = false;
     }
-      
-        const res2 = await fetch("http://localhost:3000/matches", {
-            method: "GET",
-            headers:{
-                "content-type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-        });
-        const matchesData = await res2.json();
-        matches = matchesData.data;
-
+    }
+        fetchMatches();
         fetchUser();
-    })
+    });
     
     function handleClick(event){
         const target = event.target.id;
         submitRating(target);
-        try{
-            user = generator.next().value;
-        }
-        catch(err){
-            console.log(err)
+        user = generator.next().value;
+        if(!user){
+            user == null
+            userToSwipe = false
         }
     }
 
@@ -98,6 +89,19 @@ let userToSwipe=false;
         });
     const data = await res.json();
     client = data.user
+    }
+
+    async function fetchMatches(){
+        const token = localStorage.getItem("accesToken")
+        const res2 = await fetch("http://localhost:3000/matches", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+        const matchesData = await res2.json();
+        matches = matchesData.data;
     }
 
     async function submitRating(rating){
@@ -116,15 +120,12 @@ let userToSwipe=false;
         });
 
         const data = await response.json();
-        console.log(data)
-        fetchUser();
         localStorage.setItem("accesToken", data.accesToken);
         fetchUser()
     }
 
 let user ={};
 let chatOpen = false;
-let chatText = "Open chat";
 let match={};
 
 const switchChatState = (matchId)=>{
@@ -172,7 +173,7 @@ const switchChatState = (matchId)=>{
         margin:0;
         padding:0;
     }
-    
+
     h1{
         background-color: rgb(0,0,0);
         background-color: rgba(0,0,0, 0.4); 

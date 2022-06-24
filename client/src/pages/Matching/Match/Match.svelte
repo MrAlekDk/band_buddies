@@ -4,7 +4,7 @@
 </script>
 
 <div class="user">
-    <img src={match.imgLink || unknownUrl} alt="User u matched with">
+    <img src={match.imgLink || unknownUrl ||"error"} alt="User u matched with">
     <div class="bottom-container">
         <div class="meta">
             <h2>{match.name +" "+ match.lastName}</h2>

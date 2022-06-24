@@ -19,7 +19,8 @@ export let postInfo;
         min-height: 50px;
         text-align: center;
         width: 30%;
-        margin: 2%;
+        margin-bottom: 2%;
+        margin-top: 2%;
         border-radius: 2%;
         text-shadow: 2px 2px 4px #000000;
     }

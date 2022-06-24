@@ -36,7 +36,6 @@ let rooms=[];
 io.on("connection", (socket)=>{
   let clientId = socket.handshake.auth.clientId
   let matchId = socket.handshake.auth.matchId
-
   //checks if the client's match has created a room
   if(rooms.includes(matchId+clientId)){
     socket.join(rooms.find(room => room===matchId+clientId));

@@ -4,25 +4,11 @@
     import Button from "../../components/Button/Button.svelte";
     import { onMount } from "svelte";
 
-    import store from "../../stores/images.js"
-    const imgUrl = store.guitar
+    import store from "../../stores/images.js";
+    import store2 from "../../stores/fallback.js";
+    const imgUrl = store.guitar;
 
-    let user = {
-        name: "Placeholder",
-        lastName: "Placeholder",
-        matches: [],
-        birthday: "",
-        postalcode: 0,
-        email: "",
-        artistType: "",
-        bio: "You have not yet made a bio!",
-        likedUsers: [],
-        imgLink: "https://scontent-cph2-1.xx.fbcdn.net/v/t39.30808-6/276252571_5326678807356896_716250865442285171_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=D_FS8rxPSEMAX_x6Wpr&_nc_ht=scontent-cph2-1.xx&oh=00_AT-TrDw45ce5vN6MD5hBKW0cbQkiAj9vOKo3v1bvwzyFww&oe=62ABE9E0"
-    };
-    
-    let editing = false;
-    let buttonText = "Edit";
-
+    let user = $store2.user;
 onMount( async ()=>{
     const token = localStorage.getItem("accesToken")
         const res = await fetch("http://localhost:3000/user", {
@@ -37,7 +23,7 @@ onMount( async ()=>{
 });
     
 async function updateUser(){
-    const newBio = document.getElementById("bio-input").value
+    const newBio = user.bio
     const token = localStorage.getItem("accesToken")
     try{
         const res = await fetch("http://localhost:3000/user", {
@@ -53,20 +39,19 @@ async function updateUser(){
         console.log(err);
     }
 }
+let isEditing = false
+let buttonText = "Update Bio"
 
 function handleClick(){
-    if(!editing){
-        document.getElementById("bio-input").disabled = false
-        editing = true;
-        buttonText = "Save";
-        return;
-    }
-    else{
-        updateUser()
-        editing = false;
-        buttonText = "Edit";
-        document.getElementById("bio-input").disabled = true
-    }
+if(isEditing){
+    updateUser()
+    isEditing = false
+    buttontext = "Update Bio"
+}
+else{
+    isEditing = true
+    buttonText = "Save new bio"
+}
 
 }
 
@@ -80,11 +65,10 @@ function handleClick(){
                 <div class="row">
                     <img src="{user.imgLink || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"}" alt="User">
                     <div class="information">
-                        <p>{user.bio}</p>
-                        <!--input class="bio" id="bio-input" disabled>
-                        <button class="button" on:click={handleClick}><span>{buttonText}</span></button>
-                        <Input buttonId="bio-input" inputId="city" bind:value={user.bio} label="Bio" inputType="text" disabled={true}/>
-                        <Button class="button" on:click={handleClick} buttonText="Edit bio" /-->
+                        <textarea bind:value={user.bio} maxlength=500 disabled={!isEditing}></textarea>
+                        <div class="buttons-container">
+                            <Button on:click={handleClick} buttonText={buttonText} />
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -144,6 +128,15 @@ function handleClick(){
         justify-content: space-around;
     }
 
+    textarea {
+        background-color: rgb(0,0,0);
+        color: white;
+        resize: none;
+        align-self: center;
+        width: 75%;
+        border-radius: 1%;
+    }
+
     .content-container{
         display: flex;
         flex-direction: column;
@@ -155,6 +148,7 @@ function handleClick(){
     .information{
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     .profile-container{
@@ -174,75 +168,30 @@ function handleClick(){
         min-height: 700px;
     }
 
-    .information-container{
-        
+    img{
+        box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        border-radius: 7%;
+        margin-bottom: 5%;
+        max-width: 60%;
+        min-width: 40%;
+        align-self: center;
     }
 
-    input{
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.4); 
-        color: white;
-        min-height: 50%;
-        flex-wrap: wrap;
-        height: 60%;
-        overflow: hidden;
+    .row{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 50%;
+        min-width: 45%;
+        text-align: start;
     }
 
-    .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.4); 
-  color: white;
-  border: 3px solid #f1f1f1;
-  text-align: center;
-  font-size: 15px;
-  max-width: 45%;
-  transition: all 0.5s;
-  cursor: pointer;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-img{
-    box-shadow: 10px 10px 5px rgb(7, 7, 7);
-    border-radius: 7%;
-    margin-bottom: 5%;
-    max-width: 60%;
-    min-width: 40%;
-    align-self: start;
-}
-
-.row{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 50%;
-    min-width: 45%;
-    text-align: start;
-}
-
+    .buttons-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: center;
+        width: 50%;
+    }
     </style>

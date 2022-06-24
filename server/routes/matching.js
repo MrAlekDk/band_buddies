@@ -1,7 +1,6 @@
 import express from "express";
 import { ObjectId } from "mongodb";
 const router = express.Router();
-
 import db from "../database/createConnection.js";
 
 import { authToken } from "./auth.js";

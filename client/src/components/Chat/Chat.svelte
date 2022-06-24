@@ -33,6 +33,8 @@
 
 
 onMount(async ()=>{
+    console.log(match)
+    console.log(client)
     input = document.getElementById("message")
     socket.auth = {username: client.email, clientId: client._id, matchId:match }
     socket.connect() 

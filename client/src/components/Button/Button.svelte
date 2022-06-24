@@ -16,21 +16,21 @@ export let butDisabled;
 
 
 <style>
-    .button {
-      border-radius: 4px;
-background-color: rgb(0,0,0);
-background-color: rgba(0,0,0, 0.4); 
-color: white;
-border: 3px solid #f1f1f1;
-text-align: center;
-font-size: 20px;
-align-self: center;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-min-width: 75%;
-max-width: 80%;
-z-index: 5;
+.button {
+    border-radius: 4px;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.4); 
+  color: white;
+  border: 3px solid #f1f1f1;
+  text-align: center;
+  font-size: 20px;
+  align-self: center;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  min-width: 75%;
+  max-width: 80%;
+  z-index: 5;
 }
 
 .button span {

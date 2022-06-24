@@ -2,6 +2,7 @@
 import Header from "../../components/Header/Header.svelte";
 import Background from "../../components/Background/Background.svelte";
 import Button from "../../components/Button/Button.svelte"
+import Input from "../../components/Input/Input.svelte";
 import { useNavigate, useLocation } from "svelte-navigator";
 import { onMount } from "svelte";
 
@@ -67,14 +68,8 @@ async function submitLogin(){
         <h2>Enter information: </h2>
         <div class="inputs">
             <div class="row">
-                <div class="input-box">
-                    <label for="email">Email</label>
-                    <input id="email" bind:value={email} type="email">
-                </div>
-                <div class="input-box">
-                    <label for="password">Password</label>
-                    <input id="password" bind:value={password} type="password">
-                </div>
+                <Input inputId="email" bind:value={email} label="Email" placeholder="exampleEmail@gmail.com" inputType="email"/>
+                <Input inputId="password" bind:value={password} label="Password" inputType="password"/>
                 <Button class=".button" on:click={submitLogin} disabled="{!email || !password }" buttonText={"Login"} />
             </div>
         </div>

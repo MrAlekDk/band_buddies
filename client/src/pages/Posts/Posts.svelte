@@ -14,6 +14,7 @@ const imgUrl = store.bass
 let posts = [];
 function handleClick() {
         openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
+        update();
     }
 
 onMount(()=>{
@@ -91,8 +92,8 @@ const update = () => {
         font-weight: bold;
         border: 3px solid #f1f1f1;
         margin-top: 1%;
-        width: 80%;
-        z-index: 10;
+        width: 85%;
+        z-index: 9;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 

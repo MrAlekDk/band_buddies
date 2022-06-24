@@ -6,12 +6,11 @@
 
     import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
-    import { openModal } from 'svelte-modals'
 
     import store from "../../stores/images.js"
+    import store2 from "../../stores/fallback.js"
     const imgUrl = store.band
     
-
     //generator
     function* getUser(pageSize = 1, list) {
     let output = {};
@@ -29,16 +28,8 @@
 }
 
 let client ={};
-
 let users =[{id:0, name:""}]
-let matches = [{name: "Placeholder",
-        lastName: "Placeholder",
-        matches: [],
-        birthday: "",
-        postalcode: 0,
-        email: "",
-        artistType: "",
-        bio: "You have not yet made a bio!"}]
+let matches = $store2.matches;
 let generator;
 let userToSwipe=false;
 let user ={};
@@ -47,7 +38,6 @@ let match={};
 
 async function fetchItem(item){
         const token = localStorage.getItem("accesToken")
-
         const res = await fetch(`http://localhost:3000/${item}`, {
             method: "GET",
             headers:{
@@ -55,27 +45,33 @@ async function fetchItem(item){
                 "Authorization": `Bearer ${token}`
             },
         });
-
         if(res.ok){
             let data = await res.json()
             return data
+        }
+        else{
+            return Error("Error in fetch call")
         }
     }
 
     onMount(async ()=>{
     const token = localStorage.getItem("accesToken")
 
-    users = (await fetchItem('usersToMatch')).data
-    client = await fetchItem('user');
-    matches = (await fetchItem('matches')).data 
-
-    generator = getUser(1, users); 
-    user = generator.next().value
-    if(user){
-        userToSwipe = true;
+    try{
+        users = (await fetchItem('usersToMatch')).data
+        client = (await fetchItem('user')).user;
+        matches = (await fetchItem('matches')).data 
+        generator = getUser(1, users); 
+        user = generator.next().value
+        if(user){
+            userToSwipe = true;
+        }
+        else{
+            userToSwipe = false;
+        }
     }
-    else{
-        userToSwipe = false;
+    catch(err){
+        console.log(err)
     }
     });
     
@@ -93,7 +89,6 @@ async function fetchItem(item){
         const token = localStorage.getItem("accesToken")
         const response = await fetch("http://localhost:3000/rate", {
             method: 'POST', 
-            mode: 'cors',
             cache: 'no-cache', 
             credentials: 'same-origin', 
             headers: {
@@ -108,7 +103,7 @@ async function fetchItem(item){
         localStorage.setItem("accesToken", data.accesToken);
         fetchItem('user')
     }
-
+let chatText;
 const switchChatState = (matchId)=>{
     if(chatOpen){
         chatOpen = false;
@@ -149,7 +144,6 @@ const switchChatState = (matchId)=>{
     </div>
 
 <style>
-
     :global(body){
         margin:0;
         padding:0;

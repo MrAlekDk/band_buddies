@@ -58,8 +58,8 @@ io.on("connection", (socket)=>{
       else{
         room = matchId+clientId;
       }
-      socket.to(room).emit("private message", {data: {message: data.msg, img: data.img}});
-      socket.emit("private message", {data: {message: data.msg, img: data.img}})
+      socket.to(room).emit("private message", {data: {auther: data.auther, message: data.msg, img: data.img}});
+      socket.emit("private message", {data: {auther: data.auther, message: data.msg, img: data.img}})
   })
 
 })

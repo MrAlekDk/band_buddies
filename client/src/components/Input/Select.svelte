@@ -10,7 +10,6 @@ let inputProps = {
     export let label;
     export let specStyle;
     export let placeholder;
-
     export let value ="";
 
     onMount(async ()=>{

@@ -41,20 +41,34 @@ let matches = [{name: "Placeholder",
         bio: "You have not yet made a bio!"}]
 let generator;
 let userToSwipe=false;
+let user ={};
+let chatOpen = false;
+let match={};
 
-    onMount(async ()=>{
-    const token = localStorage.getItem("accesToken")
+async function fetchItem(item){
+        const token = localStorage.getItem("accesToken")
 
-        const res1 = await fetch("http://localhost:3000/usersToMatch", {
+        const res = await fetch(`http://localhost:3000/${item}`, {
             method: "GET",
             headers:{
                 "content-type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
         });
-    if(res1.ok){
-    const userData = await res1.json();
-    users = userData.data;
+
+        if(res.ok){
+            let data = await res.json()
+            return data
+        }
+    }
+
+    onMount(async ()=>{
+    const token = localStorage.getItem("accesToken")
+
+    users = (await fetchItem('usersToMatch')).data
+    client = await fetchItem('user');
+    matches = (await fetchItem('matches')).data 
+
     generator = getUser(1, users); 
     user = generator.next().value
     if(user){
@@ -63,9 +77,6 @@ let userToSwipe=false;
     else{
         userToSwipe = false;
     }
-    }
-        fetchMatches();
-        fetchUser();
     });
     
     function handleClick(event){
@@ -76,32 +87,6 @@ let userToSwipe=false;
             user == null
             userToSwipe = false
         }
-    }
-
-    async function fetchUser(){
-        const token = localStorage.getItem("accesToken")
-        const res = await fetch("http://localhost:3000/user", {
-            method: "GET",
-            headers:{
-                "content-type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-        });
-    const data = await res.json();
-    client = data.user
-    }
-
-    async function fetchMatches(){
-        const token = localStorage.getItem("accesToken")
-        const res2 = await fetch("http://localhost:3000/matches", {
-            method: "GET",
-            headers:{
-                "content-type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-        });
-        const matchesData = await res2.json();
-        matches = matchesData.data;
     }
 
     async function submitRating(rating){
@@ -121,12 +106,8 @@ let userToSwipe=false;
 
         const data = await response.json();
         localStorage.setItem("accesToken", data.accesToken);
-        fetchUser()
+        fetchItem('user')
     }
-
-let user ={};
-let chatOpen = false;
-let match={};
 
 const switchChatState = (matchId)=>{
     if(chatOpen){

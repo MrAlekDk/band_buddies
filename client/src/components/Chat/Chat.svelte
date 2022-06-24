@@ -1,9 +1,10 @@
 <script>
     import io from "socket.io-client";
     import { onMount, onDestroy } from "svelte"
-
     import Button from "../Button/Button.svelte"
+    import store from "../../stores/images.js"
 
+    const unkSrc = store.unknown
     const socket = io("http://localhost:3000");
     let messages = []
     let input;
@@ -13,6 +14,7 @@
     export let match;
 
     let messagebox;
+    let modal;
 
     function sendMessage(){
         let message = client.name + ": " + input.value;
@@ -33,8 +35,7 @@
 onMount(async ()=>{
     input = document.getElementById("message")
     socket.auth = {username: client.email, clientId: client._id, matchId:match }
-    socket.connect()
-    let modal = document.getElementById("myModal");
+    socket.connect() 
     modal.style.display = "block";
 
 })
@@ -45,10 +46,10 @@ onDestroy( ()=>{
 
 function getTime(){
   const time = new Date;
-  return `${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
+  return `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
 }
 </script>
-<div id="myModal" class="modal">
+<div id="myModal" bind:this={modal} class="modal">
 
   <div class="modal-content">
     <span id="close" class="close" on:click={switchChatState}>&times;</span>
@@ -56,11 +57,19 @@ function getTime(){
         <h2>Chat with Band Buddy</h2>
         <div class="message-box" bind:this={messagebox}>
             {#each messages as message}
-            <div class="message">
-              <img src={message.img || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"} alt="Profile pic">
+            {#if message.auther != client.name}
+            <div class="message" style="align-items: flex-end">
+              <img src={message.img || unkSrc} alt="Profile pic">
               <p>{message.message}</p>
               <p>{getTime()}</p>
-            </div>
+          </div>
+            {:else}
+            <div class="message">
+              <img src={message.img || unkSrc} alt="Profile pic">
+              <p>{message.message}</p>
+              <p>{getTime()}</p>
+          </div>
+            {/if}
             {/each}
         </div>
         <input id="message">
@@ -74,7 +83,6 @@ function getTime(){
 
 
 <style>
-
 
 .modal {
   display: none; 
@@ -126,7 +134,6 @@ h2{
     justify-content: center;
     width: 100%;
     scroll-behavior: smooth;
-    
 }
 
 .message-box{
@@ -143,9 +150,13 @@ h2{
 }
 
 .message{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 2%;
-  border: 3px solid #f1f1f1;
+  justify-content: flex-end;
 }
+
 
 img{
   width: 5%;

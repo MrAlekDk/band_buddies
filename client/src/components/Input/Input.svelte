@@ -10,18 +10,18 @@ let inputProps = {
     export let label;
     export let specStyle;
     export let placeholder;
-
     export let value ="";
 
+    export let input;
+
     onMount(async ()=>{
-        let input = document.getElementById(inputId)
         input.type = inputType || "text";
     });
 </script>
 
 <div class="input-box fade-in-input">
     <label for={inputId}>{label}</label>
-    <input id={inputId} style={specStyle}
+    <input bind:this={input} id={inputId} style={specStyle}
                 bind:value
             {...inputProps} placeholder={placeholder}>
 </div>

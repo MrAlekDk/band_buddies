@@ -12,6 +12,8 @@
     export let switchChatState;
     export let match;
 
+    let messagebox;
+
     function sendMessage(){
         let message = client.name + ": " + input.value;
 
@@ -19,7 +21,8 @@
           socket.emit("private message", {msg: message, anotherSocketId:"hdhd", auther: client.name, img: client.imgLink, clientId: client._id, matchId: match});
           input.value = ""
         }
-        
+
+          messagebox.scrollTop = messagebox.scrollHeight
     }
 
     socket.on("private message", ({data})=>{
@@ -51,7 +54,7 @@ function getTime(){
     <span id="close" class="close" on:click={switchChatState}>&times;</span>
     <div class="chat-box">
         <h2>Chat with Band Buddy</h2>
-        <div class="message-box">
+        <div class="message-box" bind:this={messagebox}>
             {#each messages as message}
             <div class="message">
               <img src={message.img || "https://st3.depositphotos.com/29544098/32545/v/450/depositphotos_325452128-stock-illustration-vector-illustration-of-unknown-person.jpg"} alt="Profile pic">
@@ -71,6 +74,7 @@ function getTime(){
 
 
 <style>
+
 
 .modal {
   display: none; 
@@ -121,6 +125,8 @@ h2{
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    scroll-behavior: smooth;
+    
 }
 
 .message-box{
@@ -128,8 +134,7 @@ h2{
     flex-direction: column;
     overflow-y:scroll;
     background-color: rgb(42, 34, 148);
-    height: 50%;
-    max-height: 60%;
+    height: 75%;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.4); 
     color: white;

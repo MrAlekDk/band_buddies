@@ -8,7 +8,7 @@ export let buttonId;
 export let butDisabled;
 </script>
 
-<button class="button" id={buttonId} style="vertical-align:middle" disabled={butDisabled} >
+<button class="button" id={buttonId} style="vertical-align:middle" disabled={butDisabled}  >
 			<slot/>
             <span id={buttonId} on:click
             {...buttonProps}>{buttonText}</span>
@@ -34,7 +34,7 @@ z-index: 5;
 }
 
 .button span {
-  width: 80%;
+  width: 90%;
   cursor: pointer;
   display: inline-block;
   position: relative;

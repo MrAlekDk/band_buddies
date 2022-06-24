@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.use(express.json());
 
-
 router.post("/login", async (req,res)=>{
     let user = await db.users.findOne({email: req.body.user.email});
     if(user === null){

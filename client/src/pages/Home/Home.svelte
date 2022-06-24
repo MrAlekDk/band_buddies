@@ -1,10 +1,12 @@
 <script>
     import Header from "../../components/Header/Header.svelte"
     let backgroundUrl = "./images/duo_guitar.jpg"
+    import Background from "../../components/Background/Background.svelte";
     
 
 </script>
-    <div class="bg-image"></div>
+    <Background url={backgroundUrl} />
+    <!--div class="bg-image"></div-->
     <div class="content-container">
             <Header />
     <h1>Welcome to Band Buddies!</h1>
@@ -15,20 +17,6 @@
         margin:0;
         padding:0;
     }
-
-    .bg-image{
-        background-image: url("../images/duo_guitar.jpg");
-        z-index: 0;
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-        min-height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        position:absolute;
-    }
-
 
     h1{
         background-color: rgb(0,0,0);

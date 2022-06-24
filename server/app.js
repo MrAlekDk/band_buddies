@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,14 +25,23 @@ const server = http.createServer(app);
 import { Server } from "socket.io";
 const io = new Server(server);
 
+app.use(session(
+  {secret: 'mySecret', 
+  resave: false, 
+  saveUninitialized: false}
+  ));
+
+//Code relating sockets and chat
 let rooms=[];
 io.on("connection", (socket)=>{
   let clientId = socket.handshake.auth.clientId
   let matchId = socket.handshake.auth.matchId
 
+  //checks if the client's match has created a room
   if(rooms.includes(matchId+clientId)){
     socket.join(rooms.find(room => room===matchId+clientId));
   }
+  //checks if the client has created a room earlier
   else if(rooms.includes(clientId+matchId)){
     socket.join(rooms.find(room => room===clientId+matchId));
   }
@@ -41,8 +51,6 @@ io.on("connection", (socket)=>{
   }
 
   socket.on("private message", (data)=>{
-    //let clientId = socket.handshake.auth.clientId
-    //let matchId = socket.handshake.auth.matchId
     let room="";
       if(rooms.find(room => data.clientId+matchId===room)){
          room = clientId+matchId;

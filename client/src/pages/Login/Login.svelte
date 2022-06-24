@@ -1,15 +1,35 @@
 <script>
 import Header from "../../components/Header/Header.svelte";
+import Background from "../../components/Background/Background.svelte";
 import Button from "../../components/Button/Button.svelte"
 import { useNavigate, useLocation } from "svelte-navigator";
 import { onMount } from "svelte";
 
+let imgUrl = "../images/drums.jpg"
+
 let email = "";
 let password ="";
 
-        
 const navigate = useNavigate();
 const location = useLocation();
+
+
+onMount( async ()=>{
+    const token = localStorage.getItem("accesToken")
+        const res = await fetch("http://localhost:3000/user", {
+            method: "GET",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+    
+        if(res.ok){
+            const from = ($location.state && $location.state.from) || "/";
+            navigate("/profile", from, { replace: true });
+        }
+});
+
 
 async function submitLogin(){
         const user = {
@@ -20,12 +40,12 @@ async function submitLogin(){
         const response = await fetch("http://localhost:3000/login", {
             method: 'POST', 
             mode: 'cors',
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+            cache: 'no-cache', 
+            credentials: 'same-origin', 
             headers: {
                 'Content-Type': 'application/json'
                 },
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            referrerPolicy: 'no-referrer', 
             body: JSON.stringify({user}) 
             });
                 
@@ -38,7 +58,7 @@ async function submitLogin(){
 
 </script>
 
-<div class="bg-image"></div>
+<Background url={imgUrl} />
 <div class="content-container">
         <Header />
     <h1>Login</h1>
@@ -64,19 +84,6 @@ async function submitLogin(){
 :global(body){
     margin:0;
     padding:0;
-}
-
-.bg-image{
-    background-image: url("../images/drums.jpg");
-    z-index: 0;
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-     position:absolute;
 }
 
 

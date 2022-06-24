@@ -1,7 +1,10 @@
 <script>
     import Header from "../../components/Header/Header.svelte";
+    import Background from "../../components/Background/Background.svelte";
     import Button from "../../components/Button/Button.svelte";
-    import { onMount } from "svelte"
+    import { onMount } from "svelte";
+
+    const imgUrl = "../images/guitarist2.jpg";
 
     let user = {
         name: "Placeholder",
@@ -30,7 +33,6 @@ onMount( async ()=>{
         });
     const data = await res.json();
     user = data.user
-    console.log(user.imgLink)
 });
     
 async function updateUser(){
@@ -68,7 +70,7 @@ function handleClick(){
 }
 
 </script>
-    <div class="bg-image"></div>
+    <Background url={imgUrl} />
     <div class="content-container">
         <Header />
         <div class="profile-container">
@@ -114,20 +116,6 @@ function handleClick(){
         padding:0;
     }
 
-    .bg-image{
-        background-image: url("../images/guitarist2.jpg");
-        z-index: 0;
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-        min-height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        position:absolute;
-    }
-
-
     h1{
         background-color: rgb(0,0,0);
         background-color: rgba(0,0,0, 0.4); 
@@ -142,6 +130,10 @@ function handleClick(){
         width: 60%;
         font-size: 50px;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        text-shadow: 2px 2px 4px #000000;
+    }
+
+    h2, p{
         text-shadow: 2px 2px 4px #000000;
     }
 

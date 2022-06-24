@@ -1,5 +1,6 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
+import Background from "../../components/Background/Background.svelte";
 import Modal from "../../components/Modal/PostModal.svelte"
 import Post from "./Post/Post.svelte"
 import Button from "../../components/Button/Button.svelte"
@@ -9,6 +10,7 @@ import { onMount } from 'svelte'
 
 let posts = [];
 
+const imageUrl = "../images/bass.jpg";
 function handleClick() {
         openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
     }
@@ -33,8 +35,7 @@ const update = () => {
     fetchPosts();
   }
 </script>
-
-<div class="bg-image"></div>
+<Background url={imageUrl} />
     <div class="content-container">
         <Header />
         <Modal isOpen={false}></Modal>
@@ -59,20 +60,6 @@ const update = () => {
         margin:0;
         padding:0;
     }
-
-    .bg-image{
-        background-image: url("../images/bass.jpg");
-        z-index: -1;
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-        min-height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        position:absolute;
-    }
-
 
     h1{
         color: white;
@@ -104,6 +91,7 @@ const update = () => {
         border: 3px solid #f1f1f1;
         margin-top: 1%;
         width: 80%;
+        z-index: 10;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
     }
 

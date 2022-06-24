@@ -10,7 +10,12 @@ router.use(express.json());
 
 router.get("/user", authToken, (req,res)=>{
     const user = req.user;
-    res.json({user});
+    try{
+        res.json({user});
+    }
+    catch{
+        res.sendStatus(404)
+    }
 });
 
 router.post("/register", async (req,res)=>{
@@ -18,16 +23,14 @@ router.post("/register", async (req,res)=>{
     const login = await db.users.findOne({email: user.email});
     if(login === null){
         try{
-            console.log("Hello!")
             const hashedPassword = await bcrypt.hash(user.password, 10);
-            console.log(hashedPassword)
             user.password = hashedPassword;
             user.likedUsers=[]
             user.dislikedUsers=[]
             db.users.insertOne(user);
             
             //mailer.sendNewEmail(user.email, "Succesfully created account", "Welcome to BandBuddies!");
-            res.sendStatus(200);
+            res.json(user).status(201);
         }
         catch{
             res.sendStatus(400);

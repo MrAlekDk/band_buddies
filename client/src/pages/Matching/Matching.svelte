@@ -1,17 +1,16 @@
 <script>
     import Header from "../../components/Header/Header.svelte"
+    import Background from "../../components/Background/Background.svelte";
     import Button from "../../components/Button/Button.svelte"
     import Match from "./Match/Match.svelte";
 
     import Chat from "../../components/Chat/Chat.svelte"
     import { onMount } from "svelte"
-
-    import { Modals, closeModal } from 'svelte-modals'
     import { openModal } from 'svelte-modals'
 
-    function handleModalClick() {
-        openModal(Chat, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
-    }
+
+    const imgUrl = "../images/band2.jpg";
+    
 
     //generator
     function* getUser(pageSize = 1, list) {
@@ -75,7 +74,6 @@ let userToSwipe=false;
         matches = matchesData.data;
 
         fetchUser();
-
     })
     
     function handleClick(event){
@@ -121,6 +119,7 @@ let userToSwipe=false;
         console.log(data)
         fetchUser();
         localStorage.setItem("accesToken", data.accesToken);
+        fetchUser()
     }
 
 let user ={};
@@ -140,7 +139,7 @@ const switchChatState = (matchId)=>{
 }
 
 </script>
-    <div class="bg-image"></div>
+    <Background url={imgUrl} />
     <div class="content-container">
             <Header />
     <div class="matching-container">
@@ -173,21 +172,7 @@ const switchChatState = (matchId)=>{
         margin:0;
         padding:0;
     }
-
-    .bg-image{
-        background-image: url("../images/band2.jpg");
-        z-index: 0;
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-        min-height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        position:absolute;
-    }
-
-
+    
     h1{
         background-color: rgb(0,0,0);
         background-color: rgba(0,0,0, 0.4); 
@@ -221,14 +206,11 @@ const switchChatState = (matchId)=>{
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: #ff3caa79;
-        background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
         color: white;
         font-weight: bold;
-        border: 3px solid #f1f1f1;
         margin-top: 1%;
         width: 80%;
-        box-shadow: 10px 10px 5px rgb(7, 7, 7);
+        z-index:10;
     }
 
     .matches{
@@ -250,7 +232,7 @@ const switchChatState = (matchId)=>{
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
         padding: 3%;
         flex-wrap: wrap;
-        overflow: scroll;
+        overflow:auto;
     }
 
     .buttons-container{
@@ -259,6 +241,5 @@ const switchChatState = (matchId)=>{
         justify-content: center;
         width: 20%;
     }
-
 
 </style>

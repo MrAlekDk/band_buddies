@@ -1,10 +1,18 @@
 <script>
 import Header from "../../components/Header/Header.svelte"
+import Background from "../../components/Background/Background.svelte";
 import Input from "../../components/Input/Input.svelte"
 import Select from "../../components/Input/Select.svelte"
 import Button from "../../components/Button/Button.svelte"
 
 import { onMount } from "svelte"
+import { useNavigate, useLocation } from "svelte-navigator";
+
+
+const navigate = useNavigate();
+const location = useLocation();
+
+let imageUrl = "../images/drums.jpg"
 
 onMount( async ()=>{
     setMinAndMaxDates()
@@ -70,12 +78,39 @@ onMount( async ()=>{
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify({user: user}) 
         });
-        date = await response.json()
+        let data = await response.json()
         console.log(data)
+        if(response.ok){
+            login(user)
+        }
+
+    }
+
+    async function login(user){
+        const response = await fetch("http://localhost:3000/login", {
+            method: 'POST', 
+            mode: 'cors',
+            cache: 'no-cache', 
+            credentials: 'same-origin', 
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify({user}) 
+            });
+
+        if(response.ok){
+            let data = await response.json();
+            localStorage.setItem("accesToken", data.accesToken);
+
+            const from = ($location.state && $location.state.from) || "/";
+            navigate("/profile", from, { replace: true });
+        }
+        
     }
 
 </script>
-    <div class="bg-image"></div>
+    <Background url={imageUrl} />
     <div class="content-container">
             <Header />
         <h1>Signup</h1>
@@ -113,19 +148,6 @@ onMount( async ()=>{
 :global(body){
         margin:0;
         padding:0;
-    }
-
-    .bg-image{
-        background-image: url("../images/drums.jpg");
-        z-index: 0;
-        filter: blur(8px);
-        -webkit-filter: blur(8px);
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-         position:absolute;
     }
 
 

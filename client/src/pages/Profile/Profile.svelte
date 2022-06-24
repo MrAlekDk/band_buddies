@@ -4,7 +4,8 @@
     import Button from "../../components/Button/Button.svelte";
     import { onMount } from "svelte";
 
-    const imgUrl = "../images/guitarist2.jpg";
+    import store from "../../stores/images.js"
+    const imgUrl = store.guitar
 
     let user = {
         name: "Placeholder",

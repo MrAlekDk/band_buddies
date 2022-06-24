@@ -8,8 +8,8 @@
     import { onMount } from "svelte"
     import { openModal } from 'svelte-modals'
 
-
-    const imgUrl = "../images/band2.jpg";
+    import store from "../../stores/images.js"
+    const imgUrl = store.band
     
 
     //generator

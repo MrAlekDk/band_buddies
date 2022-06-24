@@ -8,11 +8,12 @@ import Button from "../../components/Button/Button.svelte"
 import { onMount } from "svelte"
 import { useNavigate, useLocation } from "svelte-navigator";
 
+import store from "../../stores/images.js"
+const imgUrl = store.drums
 
 const navigate = useNavigate();
 const location = useLocation();
 
-let imageUrl = "../images/drums.jpg"
 
 onMount( async ()=>{
     setMinAndMaxDates()
@@ -110,7 +111,7 @@ onMount( async ()=>{
     }
 
 </script>
-    <Background url={imageUrl} />
+    <Background url={imgUrl} />
     <div class="content-container">
             <Header />
         <h1>Signup</h1>

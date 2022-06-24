@@ -5,7 +5,8 @@ import Button from "../../components/Button/Button.svelte"
 import { useNavigate, useLocation } from "svelte-navigator";
 import { onMount } from "svelte";
 
-let imgUrl = "../images/drums.jpg"
+import store from "../../stores/images.js"
+const imgUrl = store.drums
 
 let email = "";
 let password ="";

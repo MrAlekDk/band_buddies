@@ -8,9 +8,10 @@ import { Modals, closeModal } from 'svelte-modals'
 import { openModal } from 'svelte-modals'
 import { onMount } from 'svelte'
 
-let posts = [];
+import store from "../../stores/images.js"
+const imgUrl = store.bass
 
-const imageUrl = "../images/bass.jpg";
+let posts = [];
 function handleClick() {
         openModal(Modal, { title: "Create post", message: "This is an alert using Svelte-Modal", isOpen: true, update: update })
     }
@@ -35,7 +36,7 @@ const update = () => {
     fetchPosts();
   }
 </script>
-<Background url={imageUrl} />
+<Background url={imgUrl} />
     <div class="content-container">
         <Header />
         <Modal isOpen={false}></Modal>

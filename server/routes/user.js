@@ -18,7 +18,7 @@ router.get("/user", authToken, (req,res)=>{
     }
 });
 
-router.post("/register", async (req,res)=>{
+router.post("/user", async (req,res)=>{
     const { user } = req.body;
     const login = await db.users.findOne({email: user.email});
     if(login === null){
@@ -46,6 +46,13 @@ router.patch("/user", authToken, (req,res)=>{
     db.users.updateOne({_id : ObjectId(id)}, {$set: data});
     res.sendStatus(200);
 });
+
+router.delete("/user", authToken, (req,res)=>{
+    const id = req.user._id;
+    console.log("Delete",id)
+    //db.users.deleteOne({_id : ObjectId(id)}, {$set: data});
+    res.sendStatus(200);
+})
 
 
 export const profileRouter = router;

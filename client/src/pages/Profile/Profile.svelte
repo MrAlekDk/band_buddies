@@ -9,6 +9,7 @@
     const imgUrl = store.guitar;
 
     let user = $store2.user;
+
 onMount( async ()=>{
     const token = localStorage.getItem("accesToken")
         const res = await fetch("http://localhost:3000/user", {
@@ -33,6 +34,22 @@ async function updateUser(){
                 "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({bio: newBio}) 
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+async function deleteUser(){
+    const token = localStorage.getItem("accesToken")
+    try{
+        const res = await fetch("http://localhost:3000/user", {
+            method: "DELETE",
+            headers:{
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
         });
     }
     catch(err){
@@ -87,6 +104,9 @@ else{
                         </div>
                         <div class="information">
                             <p>Matches: {user.likedUsers.length}</p>
+                        </div>
+                        <div class="buttons-container">
+                            <Button on:click={deleteUser} buttonText="Delete profile"/>
                         </div>
                     </div>
                 </div>
@@ -180,7 +200,6 @@ else{
     .row{
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         max-width: 50%;
         min-width: 45%;
@@ -192,6 +211,7 @@ else{
         flex-direction: row;
         justify-content: center;
         align-self: center;
+        min-width: 250px;
         width: 50%;
     }
     </style>

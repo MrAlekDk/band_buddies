@@ -68,7 +68,7 @@ onMount( async ()=>{
             dislikedUser: []
         }
         
-        const response = await fetch("http://localhost:3000/register", {
+        const response = await fetch("http://localhost:3000/user", {
             method: 'POST', 
             mode: 'cors',
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

@@ -19,48 +19,14 @@ app.use(postRouter);
 import {matchingRouter} from "./routes/matching.js";
 app.use(matchingRouter);
 
-import http from "http";
-const server = http.createServer(app);
-import { Server } from "socket.io";
-const io = new Server(server);
+import init from "./chat/chat.js"
+const server = init(app)
 
 app.use(session(
   {secret: 'mySecret', 
   resave: false, 
   saveUninitialized: false}
   ));
-
-//Code relating sockets and chat
-let rooms=[];
-io.on("connection", (socket)=>{
-  let clientId = socket.handshake.auth.clientId
-  let matchId = socket.handshake.auth.matchId
-  //checks if the client's match has created a room
-  if(rooms.includes(matchId+clientId)){
-    socket.join(rooms.find(room => room===matchId+clientId));
-  }
-  //checks if the client has created a room earlier
-  else if(rooms.includes(clientId+matchId)){
-    socket.join(rooms.find(room => room===clientId+matchId));
-  }
-  else{
-    rooms.push(clientId+matchId)
-    socket.join(clientId+matchId);
-  }
-
-  socket.on("private message", (data)=>{
-    let room="";
-      if(rooms.find(room => data.clientId+matchId===room)){
-         room = clientId+matchId;
-      }
-      else{
-        room = matchId+clientId;
-      }
-      socket.to(room).emit("private message", {data: {auther: data.auther, message: data.msg, img: data.img}});
-      socket.emit("private message", {data: {auther: data.auther, message: data.msg, img: data.img}})
-  })
-
-})
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve("../client/public/index.html"));

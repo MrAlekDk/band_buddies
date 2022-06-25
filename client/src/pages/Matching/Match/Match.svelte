@@ -17,7 +17,6 @@
 
 <style>
     
-
     img{
         margin: 5%;
         box-shadow: 10px 10px 5px rgb(7, 7, 7);
@@ -62,6 +61,4 @@
         min-width: 75%;
         align-self: center;
     }
-
-
 </style>

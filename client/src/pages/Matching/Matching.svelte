@@ -55,7 +55,6 @@ async function fetchItem(item){
     }
 
     onMount(async ()=>{
-    const token = localStorage.getItem("accesToken")
 
     try{
         users = (await fetchItem('usersToMatch')).data

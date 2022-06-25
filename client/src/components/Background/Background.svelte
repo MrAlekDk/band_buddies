@@ -1,6 +1,5 @@
 <script>
     export let url;
-    
 
 </script>
     <div class="bg-image" style="background-image: url({url})"></div>

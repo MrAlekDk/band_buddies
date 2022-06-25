@@ -1,13 +1,11 @@
 <script>
     import Header from "../../components/Header/Header.svelte"
     import Background from "../../components/Background/Background.svelte";
-    
     import store from "../../stores/images.js"
     const imgUrl = store.duoGuitar
 
 </script>
     <Background url={imgUrl} />
-    <!--div class="bg-image"></div-->
     <div class="content-container">
             <Header />
     <h1>Welcome to Band Buddies!</h1>

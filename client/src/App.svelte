@@ -25,6 +25,3 @@
 	</PrivateRoute>	
 	<Route path="/*" component={Home} />
 </Router>
-
-<style>
-</style>

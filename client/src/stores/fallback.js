@@ -1,5 +1,4 @@
-import {readable } from "svelte/store";
-
+import {readable} from "svelte/store";
 
 let matches = [{name: "Placeholder",
 lastName: "Placeholder",

@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3000;
 import path from "path";
 app.use(express.static(path.resolve("../client/public")));
 
-
 import {authRouter} from "./routes/auth.js";
 app.use(authRouter);
 

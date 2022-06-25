@@ -15,7 +15,6 @@ let password ="";
 const navigate = useNavigate();
 const location = useLocation();
 
-
 onMount( async ()=>{
     const token = localStorage.getItem("accesToken")
         const res = await fetch("http://localhost:3000/user", {
@@ -31,7 +30,6 @@ onMount( async ()=>{
             navigate("/profile", from, { replace: true });
         }
 });
-
 
 async function submitLogin(){
         const user = {
@@ -57,9 +55,7 @@ async function submitLogin(){
         const from = ($location.state && $location.state.from) || "/";
         navigate("/profile", from, { replace: true });
 }
-
 </script>
-
 <Background url={imgUrl} />
 <div class="content-container">
         <Header />
@@ -81,7 +77,6 @@ async function submitLogin(){
     margin:0;
     padding:0;
 }
-
 
 h1{
     background-color: rgb(0,0,0);
@@ -123,14 +118,4 @@ h1{
     flex-direction: row;
     justify-content: space-around;
 }
-input{
-    background-color: rgba(0,0,0, 0.4); 
-}
-
-.input-box{
-    display:flex;
-    flex-direction: column;
-    margin-left: 2%;
-}
-
 </style>

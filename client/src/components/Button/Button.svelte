@@ -17,7 +17,7 @@ export let butDisabled;
 
 <style>
 .button {
-    border-radius: 4px;
+  border-radius: 4px;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.4); 
   color: white;

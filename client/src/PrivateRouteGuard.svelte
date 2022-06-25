@@ -1,9 +1,6 @@
 <script>
-	import { useNavigate, useLocation } from "svelte-navigator";
-	import { Route, Link } from "svelte-navigator";
+	import { Route } from "svelte-navigator";
 	import { onMount} from "svelte"
-	const navigate = useNavigate();
-	const location = useLocation();
 	
 	export let path;
 	export let component;

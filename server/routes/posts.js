@@ -30,8 +30,4 @@ router.post("/post", authToken, (req,res)=>{
     }
 });
 
-router.delete("/post", (req,res)=>{
-    
-});
-
 export const postRouter = router;

@@ -1,7 +1,5 @@
 <script>
-
 const token = localStorage.getItem("accesToken") || false
-
 
 function logOut(){
     localStorage.removeItem("accesToken")
@@ -22,7 +20,6 @@ function logOut(){
 </nav>
 
 <style>
-
 .navbar-container{
     display: flex;
     flex-direction: row;
@@ -47,7 +44,6 @@ a{
     padding-bottom: 2%;
     text-decoration: none;
 }
-
 
 .glow-on-hover {
     border: 3px solid #f1f1f1;
